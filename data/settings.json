@@ -115,29 +115,29 @@
 	"sections": {
 		"list": [
 			{
-				"title": "General",
+				"title": "eMail",
 				"color": "green",
 				"align": "left",
 				"links": [
 					{
-						"name": "Portfolio",
-						"url": "https://cancellek.com",
-						"icon": "mdi:web"
+						"name": "Gmail",
+						"url": "https://mail.google.com/",
+						"icon": "mdi:gmail"
 					},
 					{
-						"name": "Keybase",
-						"url": "https://keybase.io/",
-						"icon": "fa-brands:keybase"
+						"name": "ProtonMail",
+						"url": "https://mail.proton.me/",
+						"icon": "simple-icons:protonmail"
 					},
 					{
-						"name": "GPT",
-						"url": "https://chat.openai.com/",
-						"icon": "simple-icons:openai"
+						"name": "iCloud Mail",
+						"url": "https://www.icloud.com/mail",
+						"icon": "mdi:apple-icloud"
 					},
 					{
-						"name": "OCI",
-						"url": "https://www.oracle.com/cloud/",
-						"icon": "simple-icons:oracle"
+						"name": "SimpleLogin",
+						"url": "https://app.simplelogin.io/",
+						"icon": "simple-icons:simplelogin"
 					}
 				]
 			},
@@ -174,14 +174,9 @@
 				"align": "left",
 				"links": [
 					{
-						"name": "Twitter",
-						"url": "https://twitter.com",
+						"name": "X",
+						"url": "https://x.com",
 						"icon": "mdi:twitter"
-					},
-					{
-						"name": "Mastodon",
-						"url": "https://mastodon.social/",
-						"icon": "ri:mastodon-fill"
 					},
 					{
 						"name": "Reddit",
@@ -189,9 +184,19 @@
 						"icon": "mdi:reddit"
 					},
 					{
-						"name": "Polywork",
-						"url": "https://polywork.com",
-						"icon": "simple-icons:polywork"
+						"name": "YouTube",
+						"url": "https://youtube.com/",
+						"icon": "mdi:youtube"
+					},
+					{
+						"name": "Twitch",
+						"url": "https://twitch.tv/",
+						"icon": "mdi:twitch"
+					},
+					{
+						"name": "Instagram",
+						"url": "https://instagram.com/",
+						"icon": "mdi:instagram"
 					}
 				]
 			},
@@ -201,29 +206,29 @@
 				"align": "left",
 				"links": [
 					{
-						"name": "Polygon",
-						"url": "https://polygon.com",
-						"icon": "uil:polygon"
+						"name": "DIM",
+						"url": "https://app.destinyitemmanager.com/",
+						"icon": "mdi:shield-sword"
 					},
 					{
-						"name": "IGN",
-						"url": "https://ign.com",
-						"icon": "mdi:currency-sign"
+						"name": "D2 Checklist",
+						"url": "https://www.d2checklist.com/",
+						"icon": "mdi:clipboard-check"
 					},
 					{
-						"name": "RPS",
-						"url": "https://rockpapershotgun.com/",
-						"icon": "ph:toilet-paper-bold"
+						"name": "light.gg",
+						"url": "https://www.light.gg/",
+						"icon": "mdi:lightbulb-on"
 					},
 					{
-						"name": "80lv",
-						"url": "https://80.lv/",
-						"icon": "tabler:hand-rock"
+						"name": "D2 Armor Picker",
+						"url": "https://d2armorpicker.com/#/",
+						"icon": "mdi:shield-half-full"
 					}
 				]
 			},
 			{
-				"title": "Science",
+				"title": "General",
 				"color": "blue",
 				"align": "left",
 				"links": [
