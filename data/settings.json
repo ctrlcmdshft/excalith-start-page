@@ -142,6 +142,33 @@
 				]
 			},
 			{
+				"title": "General",
+				"color": "blue",
+				"align": "left",
+				"links": [
+					{
+						"name": "PopSci",
+						"url": "https://popsci.com/",
+						"icon": "material-symbols:science"
+					},
+					{
+						"name": "Space",
+						"url": "fa6-solid:user-astronaut",
+						"icon": "mdi:reddit"
+					},
+					{
+						"name": "NASA",
+						"url": "https://blogs.nasa.gov/",
+						"icon": "simple-icons:nasa"
+					},
+					{
+						"name": "ESA",
+						"url": "https://blogs.esa.int/",
+						"icon": "mdi:black-mesa"
+					}
+				]
+			},
+			{
 				"title": "Social",
 				"color": "cyan",
 				"align": "left",
@@ -174,33 +201,6 @@
 				]
 			},
 			{
-				"title": "Dev",
-				"color": "magenta",
-				"align": "left",
-				"links": [
-					{
-						"name": "GitHub",
-						"url": "https://github.com",
-						"icon": "mdi:github"
-					},
-					{
-						"name": "GitLab",
-						"url": "https://gitlab.com",
-						"icon": "ph:gitlab-logo-simple-fill"
-					},
-					{
-						"name": "Dev.to",
-						"url": "https://dev.to",
-						"icon": "material-symbols:logo-dev"
-					},
-					{
-						"name": "Stack Overflow",
-						"url": "https://stackoverflow.com/",
-						"icon": "mdi:stack-overflow"
-					}
-				]
-			},
-			{
 				"title": "Gaming",
 				"color": "red",
 				"align": "left",
@@ -228,56 +228,71 @@
 				]
 			},
 			{
-				"title": "General",
-				"color": "blue",
+				"title": "Dev",
+				"color": "magenta",
 				"align": "left",
 				"links": [
 					{
-						"name": "PopSci",
-						"url": "https://popsci.com/",
-						"icon": "material-symbols:science"
+						"name": "GitHub",
+						"url": "https://github.com",
+						"icon": "mdi:github"
 					},
 					{
-						"name": "Space",
-						"url": "fa6-solid:user-astronaut",
-						"icon": "mdi:reddit"
+						"name": "GitLab",
+						"url": "https://gitlab.com",
+						"icon": "ph:gitlab-logo-simple-fill"
 					},
 					{
-						"name": "NASA",
-						"url": "https://blogs.nasa.gov/",
-						"icon": "simple-icons:nasa"
+						"name": "Dev.to",
+						"url": "https://dev.to",
+						"icon": "material-symbols:logo-dev"
 					},
 					{
-						"name": "ESA",
-						"url": "https://blogs.esa.int/",
-						"icon": "mdi:black-mesa"
+						"name": "Stack Overflow",
+						"url": "https://stackoverflow.com/",
+						"icon": "mdi:stack-overflow"
 					}
 				]
 			},
 			{
-				"title": "Tech",
+				"title": "Self Hosted",
 				"color": "yellow",
 				"align": "left",
 				"links": [
 					{
-						"name": "TechCrunch",
-						"url": "https://techcrunch.com/",
-						"icon": "game-icons:techno-heart"
+						"name": "Plex",
+						"url": "https://app.plex.tv/desktop/#!/",
+						"icon": "mdi:plex"
 					},
 					{
-						"name": "Verge",
-						"url": "https://www.theverge.com/",
-						"icon": "arcticons:verge"
+						"name": "Jellyfin",
+						"url": "http://192.168.10.10:8096",
+						"icon": "mdi:play-box"
 					},
 					{
-						"name": "It's Foss",
-						"url": "https://itsfoss.com/",
-						"icon": "ri:mastodon-fill"
+						"name": "UnRaid",
+						"url": "https://192.168.10.10/login",
+						"icon": "mdi:server"
 					},
 					{
-						"name": "9To5 Linux",
-						"url": "https://9to5linux.com/",
-						"icon": "uil:linux"
+						"name": "Unifi",
+						"url": "https://192.168.10.1/network/default/dashboard",
+						"icon": "mdi:access-point-network"
+					},
+					{
+						"name": "Pi-hole",
+						"url": "https://192.168.10.101/admin/",
+						"icon": "mdi:pi-hole"
+					},
+					{
+						"name": "Archisteamfarm",
+						"url": "http://192.168.10.10:1242/bots",
+						"icon": "mdi:robot"
+					},
+					{
+						"name": "Homebridge",
+						"url": "http://192.168.10.10:8581/login",
+						"icon": "mdi:home-automation"
 					}
 				]
 			}
