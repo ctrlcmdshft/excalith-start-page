@@ -260,16 +260,6 @@
 				"align": "left",
 				"links": [
 					{
-						"name": "Plex",
-						"url": "https://app.plex.tv/desktop/#!/",
-						"icon": "mdi:plex"
-					},
-					{
-						"name": "Jellyfin",
-						"url": "http://192.168.10.10:8096",
-						"icon": "mdi:play-box"
-					},
-					{
 						"name": "UnRaid",
 						"url": "https://192.168.10.10/login",
 						"icon": "mdi:server"
