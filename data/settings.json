@@ -147,24 +147,24 @@
 				"align": "left",
 				"links": [
 					{
-						"name": "PopSci",
-						"url": "https://popsci.com/",
-						"icon": "material-symbols:science"
+						"name": "Amazon",
+						"url": "https://www.amazon.com/",
+						"icon": "mdi:amazon"
 					},
 					{
-						"name": "Space",
-						"url": "fa6-solid:user-astronaut",
-						"icon": "mdi:reddit"
+						"name": "Privacy Guides",
+						"url": "https://www.privacyguides.org/en/tools/",
+						"icon": "mdi:shield-account"
 					},
 					{
-						"name": "NASA",
-						"url": "https://blogs.nasa.gov/",
-						"icon": "simple-icons:nasa"
+						"name": "Privacy Tools",
+						"url": "https://www.privacytools.io/",
+						"icon": "mdi:shield-lock"
 					},
 					{
-						"name": "ESA",
-						"url": "https://blogs.esa.int/",
-						"icon": "mdi:black-mesa"
+						"name": "RDForum",
+						"url": "https://www.rdforum.org/",
+						"icon": "mdi:forum"
 					}
 				]
 			},
