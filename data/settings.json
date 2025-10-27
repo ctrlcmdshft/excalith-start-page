@@ -270,6 +270,11 @@
 				"align": "left",
 				"links": [
 					{
+						"name": "TeslaUSB",
+						"url": "http://teslausb",
+						"icon": "simple-icons:tesla"
+					},
+					{
 						"name": "UnRaid",
 						"url": "https://192.168.10.10/login",
 						"icon": "mdi:server"
