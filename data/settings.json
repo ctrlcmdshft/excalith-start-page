@@ -142,6 +142,43 @@
 				]
 			},
 			{
+				"title": "Social",
+				"color": "cyan",
+				"align": "left",
+				"links": [
+					{
+						"name": "X",
+						"url": "https://x.com",
+						"icon": "mdi:twitter"
+					},
+					{
+						"name": "Reddit",
+						"url": "https://reddit.com",
+						"icon": "mdi:reddit"
+					},
+					{
+						"name": "YouTube",
+						"url": "https://www.youtube.com/feed/subscriptions",
+						"icon": "mdi:youtube"
+					},
+					{
+						"name": "Twitch",
+						"url": "https://twitch.tv/",
+						"icon": "mdi:twitch"
+					},
+					{
+						"name": "Instagram",
+						"url": "https://instagram.com/",
+						"icon": "mdi:instagram"
+					},
+					{
+						"name": "Kick",
+						"url": "https://kick.com/",
+						"icon": "simple-icons:kick"
+					}
+				]
+			},
+			{
 				"title": "General",
 				"color": "blue",
 				"align": "left",
@@ -165,38 +202,6 @@
 						"name": "RDForum",
 						"url": "https://www.rdforum.org/",
 						"icon": "mdi:forum"
-					}
-				]
-			},
-			{
-				"title": "Social",
-				"color": "cyan",
-				"align": "left",
-				"links": [
-					{
-						"name": "X",
-						"url": "https://x.com",
-						"icon": "mdi:twitter"
-					},
-					{
-						"name": "Reddit",
-						"url": "https://reddit.com",
-						"icon": "mdi:reddit"
-					},
-					{
-						"name": "YouTube",
-						"url": "https://youtube.com/",
-						"icon": "mdi:youtube"
-					},
-					{
-						"name": "Twitch",
-						"url": "https://twitch.tv/",
-						"icon": "mdi:twitch"
-					},
-					{
-						"name": "Instagram",
-						"url": "https://instagram.com/",
-						"icon": "mdi:instagram"
 					}
 				]
 			},
@@ -241,6 +246,11 @@
 						"name": "GitLab",
 						"url": "https://gitlab.com",
 						"icon": "ph:gitlab-logo-simple-fill"
+					},
+					{
+						"name": "Codeberg",
+						"url": "https://codeberg.org/",
+						"icon": "simple-icons:codeberg"
 					},
 					{
 						"name": "Dev.to",
