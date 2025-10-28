@@ -121,12 +121,12 @@
 				"links": [
 					{
 						"name": "Gmail",
-						"url": "https://mail.google.com/",
+						"url": "https://mail.google.com/mail/u/0/#inbox",
 						"icon": "mdi:gmail"
 					},
 					{
 						"name": "ProtonMail",
-						"url": "https://mail.proton.me/",
+						"url": "https://mail.proton.me/u/0/inbox",
 						"icon": "simple-icons:protonmail"
 					},
 					{
@@ -136,7 +136,7 @@
 					},
 					{
 						"name": "SimpleLogin",
-						"url": "https://app.simplelogin.io/",
+						"url": "https://app.simplelogin.io/dashboard/",
 						"icon": "simple-icons:simplelogin"
 					}
 				]
@@ -148,12 +148,12 @@
 				"links": [
 					{
 						"name": "X",
-						"url": "https://x.com",
+						"url": "https://x.com/home",
 						"icon": "mdi:twitter"
 					},
 					{
 						"name": "Reddit",
-						"url": "https://reddit.com",
+						"url": "https://www.reddit.com/?feed=home",
 						"icon": "mdi:reddit"
 					},
 					{
@@ -163,7 +163,7 @@
 					},
 					{
 						"name": "Twitch",
-						"url": "https://twitch.tv/",
+						"url": "https://www.twitch.tv/directory/following",
 						"icon": "mdi:twitch"
 					},
 					{
@@ -173,7 +173,7 @@
 					},
 					{
 						"name": "Kick",
-						"url": "https://kick.com/",
+						"url": "https://kick.com/following",
 						"icon": "simple-icons:kick"
 					}
 				]
@@ -285,8 +285,13 @@
 						"icon": "mdi:access-point-network"
 					},
 					{
-						"name": "Pi-hole",
+						"name": "Pi-Hole One",
 						"url": "https://192.168.10.101/admin/",
+						"icon": "mdi:pi-hole"
+					},
+					{
+						"name": "Pi-Hole Two",
+						"url": "https://192.168.10.102/admin/",
 						"icon": "mdi:pi-hole"
 					},
 					{
