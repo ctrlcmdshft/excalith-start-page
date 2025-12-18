@@ -77,6 +77,12 @@ const Help = ({ closeCallback }) => {
 							</li>
 						</ul>
 					</li>
+					<li>
+						<span className="text-blue">lock</span> Lock screen (requires password)
+					</li>
+					<li className="text-gray mt-1">
+						Set STARTPAGE_PASSWORD_HASH environment variable to enable
+					</li>
 				</ul>
 
 				<span className="block mt-line text-green">Search Aliases</span>

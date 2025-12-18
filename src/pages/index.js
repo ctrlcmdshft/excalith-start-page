@@ -2,20 +2,44 @@ import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import Meta from "@/components/Meta"
 import Terminal from "@/components/Terminal"
+import PasswordProtection from "@/components/PasswordProtection"
 import "@fontsource/fira-code/400.css"
 import "@fontsource/fira-code/600.css"
 import { useSettings } from "@/context/settings"
 import { fetchAsset } from "@/utils/fetchAsset"
+import { isPasswordEnabled, isAuthenticated } from "@/utils/passwordAuth"
+import packageInfo from "../../package.json"
 
 export default function Home() {
 	const { settings } = useSettings()
 	const [wallpaper, setWallpaper] = useState(null)
 	const [isReady, setIsReady] = useState(false)
 	const [isLoaded, setIsLoaded] = useState(false)
+	const [showPasswordProtection, setShowPasswordProtection] = useState(false)
+	const [checkingAuth, setCheckingAuth] = useState(true)
 
 	useEffect(() => {
 		const info = `\u00A9 2022-${new Date().getFullYear()} Can Cellek\n\nStart Page designed by Can Cellek\nCheck out the source code at\nhttps://github.com/excalith/excalith-start-page`
 		console.log(info)
+
+		// Check password protection status
+		const checkAuth = async () => {
+			try {
+				const passwordRequired = await isPasswordEnabled()
+				const authenticated = isAuthenticated()
+				
+				if (passwordRequired && !authenticated) {
+					setShowPasswordProtection(true)
+				}
+			} catch (error) {
+				console.error("Error checking password status:", error)
+				// If there's an error checking, allow access (fail open)
+			} finally {
+				setCheckingAuth(false)
+			}
+		}
+
+		checkAuth()
 	}, [])
 
 	useEffect(() => {
@@ -83,6 +107,22 @@ export default function Home() {
 		setIsReady(true)
 	}, [settings])
 
+	const handleAuthenticated = () => {
+		setShowPasswordProtection(false)
+	}
+
+	if (checkingAuth) {
+		return (
+			<div className="w-screen h-screen bg-black flex items-center justify-center">
+				<div className="text-white text-sm">Loading...</div>
+			</div>
+		)
+	}
+
+	if (showPasswordProtection) {
+		return <PasswordProtection onAuthenticated={handleAuthenticated} />
+	}
+
 	return (
 		<main className={"transition-all duration-200 ease-in-out"}>
 			{isReady && (
@@ -105,6 +145,9 @@ export default function Home() {
 					)}
 					<div className={`animate-fadeIn`}>
 						<Terminal />
+					</div>
+					<div className="fixed bottom-2 right-4 text-xs text-white opacity-50 hover:opacity-100 transition-opacity">
+						v{packageInfo.version}
 					</div>
 				</>
 			)}

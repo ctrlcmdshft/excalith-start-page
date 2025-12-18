@@ -1,8 +1,8 @@
 import { useEffect } from "react"
 import moment from "moment"
-import getConfig from "next/config"
 import { useSettings } from "@/context/settings"
 import { UAParser } from "ua-parser-js"
+import packageInfo from "../../package.json"
 
 let data = {
 	version: "Unknown",
@@ -20,8 +20,7 @@ let data = {
 
 const useFetchData = () => {
 	const { settings } = useSettings()
-	const { publicRuntimeConfig } = getConfig()
-	const version = publicRuntimeConfig?.version
+	const version = packageInfo.version
 
 	const uap = new UAParser()
 	const result = uap?.getResult()
