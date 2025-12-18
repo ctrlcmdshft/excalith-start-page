@@ -7,6 +7,7 @@ import { fetchAsset } from "@/utils/fetchAsset"
 export default function PasswordProtection({ onAuthenticated }) {
 	const [password, setPassword] = useState("")
 	const [error, setError] = useState("")
+	const [rememberMe, setRememberMe] = useState(false)
 	const [passwordHash, setPasswordHash] = useState(null)
 	const [wallpaper, setWallpaper] = useState(null)
 	const [isLoaded, setIsLoaded] = useState(false)
@@ -53,7 +54,7 @@ export default function PasswordProtection({ onAuthenticated }) {
 		// Verify password
 		const isValid = await verifyPassword(password, passwordHash)
 		if (isValid) {
-			setAuthenticated(true)
+			setAuthenticated(true, rememberMe)
 			onAuthenticated()
 		} else {
 			setError("Invalid password")
@@ -131,6 +132,25 @@ export default function PasswordProtection({ onAuthenticated }) {
 								{error}
 							</div>
 						)}
+						<div className="flex items-center gap-2">
+							<input
+								type="checkbox"
+								id="rememberMe"
+								checked={rememberMe}
+								onChange={(e) => setRememberMe(e.target.checked)}
+								className="w-4 h-4 cursor-pointer rounded"
+								style={{
+									accentColor: settings.theme.blue
+								}}
+							/>
+							<label
+								htmlFor="rememberMe"
+								className="text-sm cursor-pointer select-none"
+								style={{ color: settings.theme.textColor }}
+							>
+								Remember me for 30 days
+							</label>
+						</div>
 						<button
 							type="submit"
 							className="w-full py-4 font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"

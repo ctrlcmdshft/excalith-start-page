@@ -43,23 +43,52 @@ export async function isPasswordEnabled() {
 }
 
 /**
- * Check if authenticated in current session
- * @returns {boolean} True if authenticated
+ * Check if authenticated with persistent or session storage
+ * @returns {boolean} True if authenticated and not expired
  */
 export function isAuthenticated() {
 	if (typeof window === "undefined") return false
+	
+	// Check persistent storage first
+	const authData = localStorage.getItem("auth")
+	if (authData) {
+		try {
+			const { authenticated, expiresAt } = JSON.parse(authData)
+			const now = Date.now()
+			
+			if (authenticated && expiresAt > now) {
+				return true
+			} else {
+				localStorage.removeItem("auth")
+			}
+		} catch (error) {
+			localStorage.removeItem("auth")
+		}
+	}
+	
+	// Fall back to session storage
 	return sessionStorage.getItem("authenticated") === "true"
 }
 
 /**
- * Set authentication status in session
+ * Set authentication status with optional persistence
  * @param {boolean} status - Authentication status
+ * @param {boolean} remember - If true, persist for 30 days. If false, session only.
  */
-export function setAuthenticated(status) {
+export function setAuthenticated(status, remember = false) {
 	if (typeof window === "undefined") return
+	
 	if (status) {
-		sessionStorage.setItem("authenticated", "true")
+		if (remember) {
+			const expiresAt = Date.now() + (30 * 24 * 60 * 60 * 1000) // 30 days
+			localStorage.setItem("auth", JSON.stringify({ authenticated: true, expiresAt }))
+			sessionStorage.removeItem("authenticated")
+		} else {
+			sessionStorage.setItem("authenticated", "true")
+			localStorage.removeItem("auth")
+		}
 	} else {
+		localStorage.removeItem("auth")
 		sessionStorage.removeItem("authenticated")
 	}
 }
