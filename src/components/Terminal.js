@@ -4,6 +4,8 @@ import Help from "@/components/Help"
 import Config from "@/components/Config"
 import Fetch from "@/components/Fetch"
 import PasswordCommand from "@/components/PasswordCommand"
+import KeyboardShortcuts from "@/components/KeyboardShortcuts"
+import ThemePreviewer from "@/components/ThemePreviewer"
 import { useSettings } from "@/context/settings"
 import { subscribe, unsubscribe } from "@/utils/event"
 import { RunCommand } from "@/utils/command"
@@ -46,6 +48,10 @@ const Terminal = () => {
 
 		if (cmd === "help") {
 			return <Help closeCallback={closeWindow} />
+		} else if (cmd === "shortcuts") {
+			return <KeyboardShortcuts closeCallback={closeWindow} />
+		} else if (cmd === "themes") {
+			return <ThemePreviewer closeCallback={closeWindow} />
 		} else if (cmd === "config" && commands.length >= 2) {
 			return <Config commands={commands} closeCallback={closeWindow} />
 		} else if (cmd === "fetch") {

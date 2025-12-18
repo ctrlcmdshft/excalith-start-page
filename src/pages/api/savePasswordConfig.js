@@ -9,8 +9,8 @@ export default function handler(req, res) {
 	try {
 		// Only allow saving in development (when no env var is set)
 		if (process.env.STARTPAGE_PASSWORD_HASH) {
-			return res.status(403).json({ 
-				error: "Password is managed via environment variable. Update STARTPAGE_PASSWORD_HASH in your hosting dashboard." 
+			return res.status(403).json({
+				error: "Password is managed via environment variable. Update STARTPAGE_PASSWORD_HASH in your hosting dashboard."
 			})
 		}
 

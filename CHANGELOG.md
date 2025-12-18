@@ -4,9 +4,3 @@ Please refer to [releases](https://github.com/excalith/excalith-start-page/relea
 
 > [!WARNING]  
 > Before updating, please be sure to check previous versions for possible **breaking changes**. If you are using preview (online) version and having issues, please refer to [troubleshooting](https://github.com/excalith/excalith-start-page/wiki/Troubleshooting) page to find possible solutions and learn why you shouldn't use preview version.
-
-
-
-
-
-

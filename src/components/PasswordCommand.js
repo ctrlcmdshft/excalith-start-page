@@ -8,8 +8,7 @@ const PasswordCommand = ({ hostname }) => {
 			<div
 				style={{
 					color: `var(--${type || "white"})`
-				}}
-			>
+				}}>
 				{text}
 			</div>
 		</div>
@@ -22,7 +21,10 @@ const PasswordCommand = ({ hostname }) => {
 				<>
 					<Prompt hostname={hostname} />
 					{renderLogEntry("Password protection is not enabled", "yellow")}
-					{renderLogEntry("Set STARTPAGE_PASSWORD_HASH environment variable to enable", "white")}
+					{renderLogEntry(
+						"Set STARTPAGE_PASSWORD_HASH environment variable to enable",
+						"white"
+					)}
 				</>
 			)
 		}

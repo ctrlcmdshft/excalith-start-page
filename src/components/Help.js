@@ -50,6 +50,13 @@ const Help = ({ closeCallback }) => {
 						<span className="text-blue">fetch</span> Display browser information
 					</li>
 					<li>
+						<span className="text-blue">shortcuts</span> Display keyboard shortcuts
+						panel
+					</li>
+					<li>
+						<span className="text-blue">themes</span> Open visual theme previewer
+					</li>
+					<li>
 						<span className="text-blue">config</span> Configuration settings
 						<ul className="ml-5">
 							<li>

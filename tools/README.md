@@ -8,28 +8,32 @@ Those scripts aims to help you download and populate your mounted data folder wi
 ## How to use:
 
 ### bash
+
 1. Set your directory to the root of your mounted dir
 2. If you want to download the default assets (icon and wallpaper) set `--assets` to `true`
 3. If you want to download themes, set `--themes` followed by theme names. For example: `--themes bushido catppuccin-mocha onedark`
 4. Depending on what your system already has, run one of the code below
 
 **curl:**
+
 ```sh
-bash <(curl -s https://raw.githubusercontent.com/excalith/excalith-start-page/main/tools/download_assets.sh) --assets true --themes bushido catppuccin-mocha onedark 
+bash <(curl -s https://raw.githubusercontent.com/excalith/excalith-start-page/main/tools/download_assets.sh) --assets true --themes bushido catppuccin-mocha onedark
 ```
 
 **wget:**
+
 ```sh
 bash <(wget -qO- https://raw.githubusercontent.com/excalith/excalith-start-page/main/tools/download_assets.sh) --assets true --themes bushido catppuccin-mocha onedark
 ```
 
 ### powershell
+
 1. Set your directory to the root of your mounted dir
 2. If you want to change downloading default assets (icon and wallpaper) set `assets` to `$true` or `$false`
 3. If you want to download themes, set `-themes` followed by theme names. For example: ` themes = "bushido", "catppuccin-mocha", "onedark"`
 4. Run the following command on your powershell.
 
-> [!TIP] 
+> [!TIP]
 > If you are getting errors regarding execution policies, either download the script and run locally or download required items manually.
 
 ```ps

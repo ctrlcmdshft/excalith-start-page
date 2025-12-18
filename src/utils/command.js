@@ -2,7 +2,7 @@ import { isURL } from "@/utils/isURL"
 import { openLink } from "@/utils/openLink"
 import { publish } from "@/utils/event"
 
-const registeredCommands = ["list", "help", "fetch", "config", "lock"]
+const registeredCommands = ["list", "help", "fetch", "config", "lock", "shortcuts", "themes"]
 
 export function RunCommand(command, settings) {
 	if (command === "") return false

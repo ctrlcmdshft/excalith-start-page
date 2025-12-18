@@ -27,7 +27,7 @@ export default function Home() {
 			try {
 				const passwordRequired = await isPasswordEnabled()
 				const authenticated = isAuthenticated()
-				
+
 				if (passwordRequired && !authenticated) {
 					setShowPasswordProtection(true)
 				}

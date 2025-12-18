@@ -8,7 +8,7 @@
 	--window-opacity: 1;
 	--window-color: #1e212b;
 	--window-blur: 0px;
-	
+
 	--text-color: #e2e2e2;
 	--white: #e2e2e2;
 	--gray: #97989d;
@@ -70,10 +70,11 @@ a:hover {
 }
 
 .window-glow {
-	box-shadow: 0 0 5px var(--glow-color), 
-				0 0 25px var(--glow-color), 
-				0 0 50px var(--glow-color),
-				0 0 200px var(--glow-color);
+	box-shadow:
+		0 0 5px var(--glow-color),
+		0 0 25px var(--glow-color),
+		0 0 50px var(--glow-color),
+		0 0 200px var(--glow-color);
 
 	transition: box-shadow 0.2s;
 }
@@ -92,9 +93,15 @@ a:hover {
 	color: var(--selection-fg) !important;
 }
 
-.align-left { text-align: left; }
-.align-center { text-align: center; }
-.align-right { text-align: right; }
+.align-left {
+	text-align: left;
+}
+.align-center {
+	text-align: center;
+}
+.align-right {
+	text-align: right;
+}
 
 .ace_editor,
 .ace_gutter {
@@ -104,4 +111,4 @@ a:hover {
 img {
 	pointer-events: none !important;
 	user-select: none !important;
-  }
+}

@@ -48,14 +48,14 @@ export async function isPasswordEnabled() {
  */
 export function isAuthenticated() {
 	if (typeof window === "undefined") return false
-	
+
 	// Check persistent storage first
 	const authData = localStorage.getItem("auth")
 	if (authData) {
 		try {
 			const { authenticated, expiresAt } = JSON.parse(authData)
 			const now = Date.now()
-			
+
 			if (authenticated && expiresAt > now) {
 				return true
 			} else {
@@ -65,7 +65,7 @@ export function isAuthenticated() {
 			localStorage.removeItem("auth")
 		}
 	}
-	
+
 	// Fall back to session storage
 	return sessionStorage.getItem("authenticated") === "true"
 }
@@ -77,10 +77,10 @@ export function isAuthenticated() {
  */
 export function setAuthenticated(status, remember = false) {
 	if (typeof window === "undefined") return
-	
+
 	if (status) {
 		if (remember) {
-			const expiresAt = Date.now() + (30 * 24 * 60 * 60 * 1000) // 30 days
+			const expiresAt = Date.now() + 30 * 24 * 60 * 60 * 1000 // 30 days
 			localStorage.setItem("auth", JSON.stringify({ authenticated: true, expiresAt }))
 			sessionStorage.removeItem("authenticated")
 		} else {

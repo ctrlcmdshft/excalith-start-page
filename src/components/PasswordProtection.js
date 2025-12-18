@@ -29,7 +29,7 @@ export default function PasswordProtection({ onAuthenticated }) {
 
 	useEffect(() => {
 		if (!settings) return
-		
+
 		// Load wallpaper
 		fetchAsset(settings.wallpaper.url)
 			.then((data) => {
@@ -81,24 +81,21 @@ export default function PasswordProtection({ onAuthenticated }) {
 					}}
 				/>
 			)}
-			<div 
+			<div
 				className="absolute inset-0 flex items-center justify-center backdrop-blur-sm"
-				style={{ backgroundColor: settings.theme.backgroundColor + '80' }}
-			>
-				<div 
+				style={{ backgroundColor: settings.theme.backgroundColor + "80" }}>
+				<div
 					className="w-full max-w-md p-10 backdrop-blur-md rounded-2xl shadow-2xl"
-					style={{ 
-						backgroundColor: settings.theme.windowColor + 'dd',
-						borderColor: settings.theme.gray + '80',
-						borderWidth: '1px'
-					}}
-				>
+					style={{
+						backgroundColor: settings.theme.windowColor + "dd",
+						borderColor: settings.theme.gray + "80",
+						borderWidth: "1px"
+					}}>
 					<div className="text-center mb-8">
 						<div className="text-6xl mb-4">🔒</div>
-						<h2 
+						<h2
 							className="text-3xl font-semibold"
-							style={{ color: settings.theme.textColor }}
-						>
+							style={{ color: settings.theme.textColor }}>
 							Password Required
 						</h2>
 					</div>
@@ -112,23 +109,22 @@ export default function PasswordProtection({ onAuthenticated }) {
 								autoFocus
 								className="w-full px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all"
 								style={{
-									backgroundColor: settings.theme.black + 'cc',
+									backgroundColor: settings.theme.black + "cc",
 									borderColor: settings.theme.gray,
-									borderWidth: '1px',
+									borderWidth: "1px",
 									color: settings.theme.textColor
 								}}
 							/>
 						</div>
 						{error && (
-							<div 
+							<div
 								className="text-sm text-center font-medium animate-pulse py-2 rounded-lg"
 								style={{
 									color: settings.theme.red,
-									backgroundColor: settings.theme.red + '20',
-									borderColor: settings.theme.red + '60',
-									borderWidth: '1px'
-								}}
-							>
+									backgroundColor: settings.theme.red + "20",
+									borderColor: settings.theme.red + "60",
+									borderWidth: "1px"
+								}}>
 								{error}
 							</div>
 						)}
@@ -146,8 +142,7 @@ export default function PasswordProtection({ onAuthenticated }) {
 							<label
 								htmlFor="rememberMe"
 								className="text-sm cursor-pointer select-none"
-								style={{ color: settings.theme.textColor }}
-							>
+								style={{ color: settings.theme.textColor }}>
 								Remember me for 30 days
 							</label>
 						</div>
@@ -158,9 +153,8 @@ export default function PasswordProtection({ onAuthenticated }) {
 								backgroundColor: settings.theme.blue,
 								color: settings.theme.white
 							}}
-							onMouseEnter={(e) => e.currentTarget.style.opacity = '0.9'}
-							onMouseLeave={(e) => e.currentTarget.style.opacity = '1'}
-						>
+							onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
+							onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}>
 							Unlock
 						</button>
 					</form>
@@ -169,4 +163,3 @@ export default function PasswordProtection({ onAuthenticated }) {
 		</div>
 	)
 }
-

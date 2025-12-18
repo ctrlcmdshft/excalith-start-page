@@ -10,7 +10,7 @@ const nextConfig = {
 	reactStrictMode: true,
 	output: "standalone",
 	eslint: {
-		ignoreDuringBuilds: true,
+		ignoreDuringBuilds: true
 	},
 	images: {
 		unoptimized: true,

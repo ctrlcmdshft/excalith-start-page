@@ -15,6 +15,43 @@ const Search = ({ commandChange, selectionChange }) => {
 	const [selection, setSelection] = useState("")
 	const [suggestion, setSuggestion] = useState("")
 
+	// Built-in commands for auto-completion
+	const builtInCommands = [
+		"list",
+		"help",
+		"fetch",
+		"shortcuts",
+		"themes",
+		"config",
+		"config help",
+		"config edit",
+		"config reset",
+		"config theme",
+		"config import",
+		"lock"
+	]
+
+	// Combine built-in commands, search shortcuts, and link names for completion
+	const getAllCompletions = () => {
+		const searchShortcuts = settings.search.shortcuts.map((s) => s.alias)
+		const themeCommands = [
+			"catppuccin-mocha",
+			"dracula",
+			"nord",
+			"tokyonight",
+			"gruvbox-material-dark",
+			"synthwave",
+			"onedark",
+			"everforest-dark",
+			"horizon-dark",
+			"bushido",
+			"hacker",
+			"monokai",
+			"verdant"
+		].map((t) => `config theme ${t}`)
+		return [...builtInCommands, ...searchShortcuts, ...themeCommands, ...items]
+	}
+
 	// Focus on input
 	useEffect(() => {
 		setTimeout(() => inputRef.current.focus(), 0)
@@ -101,7 +138,8 @@ const Search = ({ commandChange, selectionChange }) => {
 		if (command === "") {
 			selectionChange("")
 		} else {
-			const filtered = items.filter((item) => item.startsWith(command))
+			const allCompletions = getAllCompletions()
+			const filtered = allCompletions.filter((item) => item.startsWith(command))
 			setFilteredItems(filtered)
 		}
 		// eslint-disable-next-line
