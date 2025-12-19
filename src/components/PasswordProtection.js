@@ -10,7 +10,6 @@ import {
 } from "@/utils/passwordAuth"
 import { useSettings } from "@/context/settings"
 import { fetchAsset } from "@/utils/fetchAsset"
-import Prompt from "@/components/Prompt"
 
 const MAX_ATTEMPTS = 5
 const LOCKOUT_DURATION = 300 // 5 minutes in seconds
@@ -27,6 +26,7 @@ export default function PasswordProtection({ onAuthenticated }) {
 	const [lockoutTime, setLockoutTime] = useState(0)
 	const [isAnimating, setIsAnimating] = useState(false)
 	const { settings } = useSettings()
+	const passwordInputRef = React.useRef(null)
 
 	useEffect(() => {
 		// Load password hash from API
@@ -45,8 +45,14 @@ export default function PasswordProtection({ onAuthenticated }) {
 		setFailedAttempts(getFailedAttempts())
 		setLockoutTime(getLockoutTimeRemaining())
 
-		// Trigger entrance animation
-		setTimeout(() => setIsAnimating(true), 100)
+		// Trigger entrance animation and focus input
+		setTimeout(() => {
+			setIsAnimating(true)
+			// Focus the password input after animation starts
+			if (passwordInputRef.current) {
+				passwordInputRef.current.focus()
+			}
+		}, 100)
 	}, [])
 
 	useEffect(() => {
@@ -96,37 +102,63 @@ export default function PasswordProtection({ onAuthenticated }) {
 			return
 		}
 
-		// Verify password
-		const isValid = await verifyPassword(password, passwordHash)
-		if (isValid) {
-			setAuthenticated(true, rememberMe)
-			// Smooth exit animation
-			setIsAnimating(false)
-			setTimeout(() => onAuthenticated(), 300)
-		} else {
-			const newAttempts = incrementFailedAttempts()
-			setFailedAttempts(newAttempts)
+		try {
+			// Call login API to verify password and create session
+			const response = await fetch("/api/auth/login", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				body: JSON.stringify({ password })
+			})
 
-			const remainingAttempts = MAX_ATTEMPTS - newAttempts
+			const data = await response.json()
 
-			if (remainingAttempts <= 0) {
-				setLockout(LOCKOUT_DURATION)
-				setLockoutTime(LOCKOUT_DURATION)
-				setError(
-					`Too many failed attempts. Locked out for ${LOCKOUT_DURATION / 60} minutes`
-				)
+			if (response.ok && data.success) {
+				// Also set local authentication for client-side checks
+				setAuthenticated(true, rememberMe)
+				// Smooth exit animation
+				setIsAnimating(false)
+				setTimeout(() => onAuthenticated(), 300)
 			} else {
-				setError(
-					`Invalid password (${remainingAttempts} attempt${
-						remainingAttempts !== 1 ? "s" : ""
-					} remaining)`
-				)
+				// Handle failed login
+				const newAttempts = incrementFailedAttempts()
+				setFailedAttempts(newAttempts)
+
+				const remainingAttempts = MAX_ATTEMPTS - newAttempts
+
+				if (remainingAttempts <= 0) {
+					setLockout(LOCKOUT_DURATION)
+					setLockoutTime(LOCKOUT_DURATION)
+					setError(
+						`Too many failed attempts. Locked out for ${LOCKOUT_DURATION / 60} minutes`
+					)
+				} else {
+					setError(
+						`Invalid password (${remainingAttempts} attempt${
+							remainingAttempts !== 1 ? "s" : ""
+						} remaining)`
+					)
+				}
+				setPassword("")
 			}
+		} catch (error) {
+			console.error("Login error:", error)
+			setError("An error occurred. Please try again.")
 			setPassword("")
 		}
 	}
 
-	if (!settings) return null
+	// Use settings if available, otherwise use safe defaults for password screen
+	const safeSettings = settings || {
+		wallpaper: { easing: "ease-in-out", fadeIn: true, blur: false, url: "" },
+		terminal: { windowGlowColor: "#291f3325", windowGlow: false },
+		theme: {
+			textColor: "#e2e2e2",
+			gray: "#97989d",
+			blue: "#2bc3de"
+		}
+	}
 
 	const isLockedOut = lockoutTime > 0
 
@@ -136,9 +168,9 @@ export default function PasswordProtection({ onAuthenticated }) {
 				<Image
 					alt=""
 					className={`transition-opacity w-screen h-screen -z-50 object-cover
-					${settings.wallpaper.easing}
-					${settings.wallpaper.fadeIn && "duration-1000"}
-					${settings.wallpaper.blur && "blur-wallpaper"}
+					${safeSettings.wallpaper.easing}
+					${safeSettings.wallpaper.fadeIn && "duration-1000"}
+					${safeSettings.wallpaper.blur && "blur-wallpaper"}
 					${isLoaded ? "opacity-100" : "opacity-0"}`}
 					src={wallpaper}
 					fill
@@ -149,51 +181,55 @@ export default function PasswordProtection({ onAuthenticated }) {
 			)}
 			<div
 				className={`absolute w-full h-fit inset-x-0 inset-y-0 m-auto shadow-lg rounded-terminal bg-window-color max-w-terminal p-terminal transition-all duration-300 ${
-					settings.terminal.windowGlow && "window-glow"
+					safeSettings.terminal?.windowGlow && "window-glow"
 				} ${isAnimating ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
 				<div className="h-full overflow-y-auto text-textColor">
 					<div>
-						<span>
-							<Prompt command="lock" />
-						</span>
+					<span className="flex cursor-default">
+						<span className="text-green">guest</span>
+						<span className="text-gray">@</span>
+						<span className="text-magenta">startpage</span>
+						<span className="text-magenta ml-2">❯</span>
+						<span className="ml-2.5 text-textColor">lock</span>
+					</span>
 
-						<div className="mt-line">
-							<span className="text-yellow">Authentication Required</span>
-						</div>
+					<div className="mt-line">
+						<span className="text-yellow">Authentication Required</span>
+					</div>
 
-						<div
-							className="mt-line"
-							style={{
-								borderTopColor: settings.theme.gray + "30",
-								borderTopWidth: "1px",
-								paddingTop: "1rem"
-							}}>
-							<form onSubmit={handleSubmit}>
-								<div className="mb-4">
-									<div className="flex items-center gap-2 mb-1">
-										<span className="text-blue">password</span>
-										<span className="text-gray">»</span>
-									</div>
-									<div className="relative">
+					<div
+						className="mt-line"
+						style={{
+							borderTopColor: safeSettings.theme.gray + "30",
+							borderTopWidth: "1px",
+							paddingTop: "1rem"
+						}}>
+						<form onSubmit={handleSubmit}>
+						<div className="mb-4">
+							<div className="flex items-center gap-2 mb-1">
+								<span className="text-blue">password</span>
+								<span className="text-gray">»</span>
+							</div>
+							<div className="relative">
 										<input
-											type={showPassword ? "text" : "password"}
-											value={password}
-											onChange={(e) => setPassword(e.target.value)}
-											autoFocus
+										ref={passwordInputRef}
+										type={showPassword ? "text" : "password"}
+										value={password}
+										onChange={(e) => setPassword(e.target.value)}
 											disabled={isLockedOut}
 											className="w-full bg-transparent border-b focus:outline-none py-1 px-1 pr-8 disabled:opacity-50"
 											style={{
-												color: settings.theme.textColor,
-												borderColor: settings.theme.gray + "40"
-											}}
-											onFocus={(e) =>
-												!isLockedOut &&
-												(e.currentTarget.style.borderColor =
-													settings.theme.blue)
-											}
-											onBlur={(e) =>
-												(e.currentTarget.style.borderColor =
-													settings.theme.gray + "40")
+											color: safeSettings.theme.textColor,
+											borderColor: safeSettings.theme.gray + "40"
+										}}
+										onFocus={(e) =>
+											!isLockedOut &&
+											(e.currentTarget.style.borderColor =
+												safeSettings.theme.blue)
+										}
+										onBlur={(e) =>
+											(e.currentTarget.style.borderColor =
+												safeSettings.theme.gray + "40")
 											}
 										/>
 										<button
@@ -201,7 +237,7 @@ export default function PasswordProtection({ onAuthenticated }) {
 											onClick={() => setShowPassword(!showPassword)}
 											disabled={isLockedOut}
 											className="absolute right-0 top-1/2 -translate-y-1/2 text-sm hover:opacity-80 disabled:opacity-30"
-											style={{ color: settings.theme.blue }}>
+											style={{ color: safeSettings.theme.blue }}>
 											{showPassword ? "👁️" : "👁️‍🗨️"}
 										</button>
 									</div>
@@ -233,14 +269,14 @@ export default function PasswordProtection({ onAuthenticated }) {
 										disabled={isLockedOut}
 										className="w-4 h-4 cursor-pointer disabled:opacity-50"
 										style={{
-											accentColor: settings.theme.blue
+										accentColor: safeSettings.theme.blue
 										}}
 									/>
 									<label
 										htmlFor="rememberMe"
 										className="text-sm cursor-pointer select-none"
 										style={{
-											color: settings.theme.gray,
+										color: safeSettings.theme.gray,
 											opacity: isLockedOut ? 0.5 : 1
 										}}>
 										Remember me for 7 days
@@ -250,7 +286,7 @@ export default function PasswordProtection({ onAuthenticated }) {
 								<div
 									className="flex items-center gap-2"
 									style={{
-										borderTopColor: settings.theme.gray + "30",
+										borderTopColor: safeSettings.theme.gray + "30",
 										borderTopWidth: "1px",
 										paddingTop: "0.75rem"
 									}}>
@@ -258,9 +294,9 @@ export default function PasswordProtection({ onAuthenticated }) {
 									<span
 										className="px-2 py-0.5 rounded text-xs"
 										style={{
-											backgroundColor: settings.theme.blue + "20",
-											color: settings.theme.blue,
-											borderColor: settings.theme.blue + "40",
+											backgroundColor: safeSettings.theme.blue + "20",
+											color: safeSettings.theme.blue,
+											borderColor: safeSettings.theme.blue + "40",
 											borderWidth: "1px"
 										}}>
 										ENTER
