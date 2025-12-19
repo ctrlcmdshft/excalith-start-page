@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react"
 import Image from "next/image"
-import { 
-	verifyPassword, 
-	setAuthenticated, 
-	getFailedAttempts, 
-	incrementFailedAttempts, 
-	getLockoutTimeRemaining, 
+import {
+	verifyPassword,
+	setAuthenticated,
+	getFailedAttempts,
+	incrementFailedAttempts,
+	getLockoutTimeRemaining,
 	setLockout
 } from "@/utils/passwordAuth"
 import { useSettings } from "@/context/settings"
@@ -67,7 +67,7 @@ export default function PasswordProtection({ onAuthenticated }) {
 	// Lockout timer countdown
 	useEffect(() => {
 		if (lockoutTime <= 0) return
-		
+
 		const timer = setInterval(() => {
 			const remaining = getLockoutTimeRemaining()
 			setLockoutTime(remaining)
@@ -106,15 +106,21 @@ export default function PasswordProtection({ onAuthenticated }) {
 		} else {
 			const newAttempts = incrementFailedAttempts()
 			setFailedAttempts(newAttempts)
-			
+
 			const remainingAttempts = MAX_ATTEMPTS - newAttempts
-			
+
 			if (remainingAttempts <= 0) {
 				setLockout(LOCKOUT_DURATION)
 				setLockoutTime(LOCKOUT_DURATION)
-				setError(`Too many failed attempts. Locked out for ${LOCKOUT_DURATION / 60} minutes`)
+				setError(
+					`Too many failed attempts. Locked out for ${LOCKOUT_DURATION / 60} minutes`
+				)
 			} else {
-				setError(`Invalid password (${remainingAttempts} attempt${remainingAttempts !== 1 ? 's' : ''} remaining)`)
+				setError(
+					`Invalid password (${remainingAttempts} attempt${
+						remainingAttempts !== 1 ? "s" : ""
+					} remaining)`
+				)
 			}
 			setPassword("")
 		}
@@ -155,8 +161,13 @@ export default function PasswordProtection({ onAuthenticated }) {
 							<span className="text-yellow">Authentication Required</span>
 						</div>
 
-
-						<div className="mt-line" style={{ borderTopColor: settings.theme.gray + "30", borderTopWidth: "1px", paddingTop: "1rem" }}>
+						<div
+							className="mt-line"
+							style={{
+								borderTopColor: settings.theme.gray + "30",
+								borderTopWidth: "1px",
+								paddingTop: "1rem"
+							}}>
 							<form onSubmit={handleSubmit}>
 								<div className="mb-4">
 									<div className="flex items-center gap-2 mb-1">
@@ -175,8 +186,15 @@ export default function PasswordProtection({ onAuthenticated }) {
 												color: settings.theme.textColor,
 												borderColor: settings.theme.gray + "40"
 											}}
-											onFocus={(e) => !isLockedOut && (e.currentTarget.style.borderColor = settings.theme.blue)}
-											onBlur={(e) => e.currentTarget.style.borderColor = settings.theme.gray + "40"}
+											onFocus={(e) =>
+												!isLockedOut &&
+												(e.currentTarget.style.borderColor =
+													settings.theme.blue)
+											}
+											onBlur={(e) =>
+												(e.currentTarget.style.borderColor =
+													settings.theme.gray + "40")
+											}
 										/>
 										<button
 											type="button"
@@ -200,7 +218,8 @@ export default function PasswordProtection({ onAuthenticated }) {
 									<div className="mb-4 flex items-center gap-2">
 										<span className="text-yellow">⚠</span>
 										<span className="text-yellow text-sm">
-											{failedAttempts} failed attempt{failedAttempts !== 1 ? 's' : ''}
+											{failedAttempts} failed attempt
+											{failedAttempts !== 1 ? "s" : ""}
 										</span>
 									</div>
 								)}
@@ -220,14 +239,30 @@ export default function PasswordProtection({ onAuthenticated }) {
 									<label
 										htmlFor="rememberMe"
 										className="text-sm cursor-pointer select-none"
-										style={{ color: settings.theme.gray, opacity: isLockedOut ? 0.5 : 1 }}>
+										style={{
+											color: settings.theme.gray,
+											opacity: isLockedOut ? 0.5 : 1
+										}}>
 										Remember me for 7 days
 									</label>
 								</div>
 
-								<div className="flex items-center gap-2" style={{ borderTopColor: settings.theme.gray + "30", borderTopWidth: "1px", paddingTop: "0.75rem" }}>
+								<div
+									className="flex items-center gap-2"
+									style={{
+										borderTopColor: settings.theme.gray + "30",
+										borderTopWidth: "1px",
+										paddingTop: "0.75rem"
+									}}>
 									<span className="text-gray">Press</span>
-									<span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: settings.theme.blue + "20", color: settings.theme.blue, borderColor: settings.theme.blue + "40", borderWidth: "1px" }}>
+									<span
+										className="px-2 py-0.5 rounded text-xs"
+										style={{
+											backgroundColor: settings.theme.blue + "20",
+											color: settings.theme.blue,
+											borderColor: settings.theme.blue + "40",
+											borderWidth: "1px"
+										}}>
 										ENTER
 									</span>
 									<span className="text-gray">to authenticate</span>

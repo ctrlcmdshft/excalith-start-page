@@ -6,6 +6,7 @@ import Fetch from "@/components/Fetch"
 import PasswordCommand from "@/components/PasswordCommand"
 import KeyboardShortcuts from "@/components/KeyboardShortcuts"
 import ThemePreviewer from "@/components/ThemePreviewer"
+import Weather from "@/components/Weather"
 import { useSettings } from "@/context/settings"
 import { subscribe, unsubscribe } from "@/utils/event"
 import { RunCommand } from "@/utils/command"
@@ -56,6 +57,9 @@ const Terminal = () => {
 			return <Config commands={commands} closeCallback={closeWindow} />
 		} else if (cmd === "fetch") {
 			return <Fetch closeCallback={closeWindow} />
+		} else if (cmd === "weather") {
+			const location = commands.slice(1).join(" ")
+			return <Weather closeCallback={closeWindow} location={location} />
 		} else if (cmd === "lock") {
 			return <PasswordCommand commands={commands} closeCallback={closeWindow} />
 		} else {

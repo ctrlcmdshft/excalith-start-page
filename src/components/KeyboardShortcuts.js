@@ -29,14 +29,18 @@ const KeyboardShortcuts = ({ closeCallback }) => {
 				{ key: "list", description: "Show all links" },
 				{ key: "help", description: "Show help and search shortcuts" },
 				{ key: "fetch", description: "Display system information" },
-				{ key: "shortcuts", description: "Show this keyboard shortcuts panel" },
+				{ key: "weather <location>", description: "Show weather for zip code or city" },
+				{ key: "shortcuts", description: "Show keyboard shortcuts panel" },
+				{ key: "?", description: "Alias for shortcuts command" },
 				{ key: "config", description: "Configuration commands" },
+				{ key: "config help", description: "Display configuration help" },
 				{ key: "config edit", description: "Edit configuration" },
 				{ key: "config theme", description: "List available themes" },
 				{ key: "config theme <name>", description: "Switch to specified theme" },
 				{ key: "config import <url>", description: "Import configuration from URL" },
 				{ key: "config reset", description: "Reset to default configuration" },
-				{ key: "themes", description: "Open theme previewer" }
+				{ key: "themes", description: "Open theme previewer" },
+				{ key: "lock", description: "Lock screen (requires password setup)" }
 			]
 		},
 		{

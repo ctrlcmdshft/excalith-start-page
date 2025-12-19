@@ -134,7 +134,7 @@ export function getLockoutTimeRemaining() {
 	if (typeof window === "undefined") return 0
 	const lockoutUntil = localStorage.getItem("lockoutUntil")
 	if (!lockoutUntil) return 0
-	
+
 	const remaining = parseInt(lockoutUntil, 10) - Date.now()
 	if (remaining <= 0) {
 		clearFailedAttempts()
@@ -149,6 +149,6 @@ export function getLockoutTimeRemaining() {
  */
 export function setLockout(seconds) {
 	if (typeof window === "undefined") return
-	const lockoutUntil = Date.now() + (seconds * 1000)
+	const lockoutUntil = Date.now() + seconds * 1000
 	localStorage.setItem("lockoutUntil", lockoutUntil.toString())
 }

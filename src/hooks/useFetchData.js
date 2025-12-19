@@ -33,8 +33,8 @@ const useFetchData = () => {
 				// Client hints can detect Windows 11 properly
 				const osName = os.name || result.os.name || "Unknown"
 				const osVersion = os.version || result.os.version || "Unknown"
-				
-				setData(prevData => ({
+
+				setData((prevData) => ({
 					...prevData,
 					osName: osName,
 					osVersion: osVersion
@@ -47,7 +47,7 @@ const useFetchData = () => {
 
 		getOSInfo()
 
-		setData(prevData => ({
+		setData((prevData) => ({
 			...prevData,
 			version: version,
 			theme: settings.theme.name,
