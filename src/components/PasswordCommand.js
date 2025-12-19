@@ -26,11 +26,23 @@ const PasswordCommand = ({ closeCallback }) => {
 		if (!loading) {
 			if (passwordHash) {
 				// Password is enabled, lock the screen
-				setAuthenticated(false)
-				// Small delay to ensure state is cleared
-				setTimeout(() => {
-					window.location.reload()
-				}, 100)
+				const lockScreen = async () => {
+					setAuthenticated(false)
+					
+					// Destroy the session cookie on the server
+					try {
+						await fetch("/api/auth/logout", { method: "POST" })
+					} catch (error) {
+						console.error("Failed to logout:", error)
+					}
+					
+					// Small delay to ensure state is cleared
+					setTimeout(() => {
+						window.location.reload()
+					}, 100)
+				}
+				
+				lockScreen()
 			}
 		}
 		// eslint-disable-next-line
