@@ -1,316 +1,316 @@
 {
-	"username": "CtrlCmdShft",
-	"title": "CtrlCmdShft Start Page",
-	"theme": {
-		"name": "Default",
-		"backgroundColor": "#121317",
-		"windowColor": "#1e212b",
-		"textColor": "#e2e2e2",
-		"black": "#16161e",
-		"red": "#ec6183",
-		"green": "#2ed8a2",
-		"yellow": "#e8b195",
-		"blue": "#2bc3de",
-		"magenta": "#d1aff8",
-		"cyan": "#62e0e2",
-		"white": "#e2e2e2",
-		"gray": "#97989d"
-	},
-	"wallpaper": {
-		"url": "assets/default-wallpaper.svg",
-		"easing": "ease-in-out",
-		"fadeIn": true,
-		"blur": false
-	},
-	"terminal": {
-		"fixedHeight": true,
-		"windowGlow": true,
-		"windowGlowColor": "#291f3325",
-		"textGlow": false,
-		"opacity": 0,
-		"blur": 16
-	},
-	"prompt": {
-		"ctrlC": true,
-		"placeholder": "command...",
-		"placeholderColor": "gray",
-		"userColor": "green",
-		"atColor": "gray",
-		"hostColor": "magenta",
-		"promptColor": "magenta",
-		"promptSymbol": "❯",
-		"caretColor": "green",
-		"selectionBg": "yellow",
-		"selectionFg": "black"
-	},
-	"fetch": {
-		"timeFormat": "h:mm A",
-		"dateFormat": "MM/DD/YYYY",
-		"titleColor": "yellow",
-		"image": "assets/default-icon.svg",
-		"data": [
-			"Time: {time}",
-			"Date: {date}",
-			"{seperator}",
-			"OS: {osName} {osVersion}",
-			"Theme: {theme}",
-			"{seperator}",
-			"Browser: {browser} {browserVersion}",
-			"Engine: {engineName}",
-			"{seperator}",
-			"{colors}"
-		]
-	},
-	"urlLaunch": {
-		"target": "_self",
-		"hoverColor": "magenta"
-	},
-	"search": {
-		"default": "https://google.com/search?q={}",
-		"target": "_self",
-		"shortcutRegex": "(!?[A-Za-z0-9]+) (.*)",
-		"shortcuts": [
-			{
-				"alias": "g",
-				"name": "Google Search",
-				"url": "https://google.com/search?q={}"
-			},
-			{
-				"alias": "d",
-				"name": "DuckDuckGo Search",
-				"url": "https://duckduckgo.com/?q={}"
-			},
-			{
-				"alias": "!d",
-				"name": "DuckDuckGo Lucky Search",
-				"url": "https://duckduckgo.com/?q=!ducky+{}"
-			},
-			{
-				"alias": "b",
-				"name": "Brave Search",
-				"url": "https://search.brave.com/search?q={}"
-			},
-			{
-				"alias": "gh",
-				"name": "Github Search",
-				"url": "https://github.com/search?q={}"
-			},
-			{
-				"alias": "s",
-				"name": "Stack Overflow Search",
-				"url": "https://stackoverflow.com/search?q={}"
-			},
-			{
-				"alias": "r",
-				"name": "Subreddit Search",
-				"url": "https://reddit.com/r/{}"
-			},
-			{
-				"alias": "w",
-				"name": "Wikipedia Search",
-				"url": "https://en.wikipedia.org/wiki/{}"
-			}
-		]
-	},
-	"sections": {
-		"list": [
-			{
-				"title": "eMail",
-				"color": "green",
-				"align": "left",
-				"links": [
-					{
-						"name": "Gmail",
-						"url": "https://mail.google.com/mail/u/0/#inbox",
-						"icon": "mdi:gmail"
-					},
-					{
-						"name": "ProtonMail",
-						"url": "https://mail.proton.me/u/0/inbox",
-						"icon": "simple-icons:protonmail"
-					},
-					{
-						"name": "iCloud Mail",
-						"url": "https://www.icloud.com/mail",
-						"icon": "mdi:apple-icloud"
-					},
-					{
-						"name": "SimpleLogin",
-						"url": "https://app.simplelogin.io/dashboard/",
-						"icon": "simple-icons:simplelogin"
-					}
-				]
-			},
-			{
-				"title": "Social",
-				"color": "cyan",
-				"align": "left",
-				"links": [
-					{
-						"name": "X",
-						"url": "https://x.com/home",
-						"icon": "mdi:twitter"
-					},
-					{
-						"name": "Reddit",
-						"url": "https://www.reddit.com/?feed=home",
-						"icon": "mdi:reddit"
-					},
-					{
-						"name": "YouTube",
-						"url": "https://www.youtube.com/feed/subscriptions",
-						"icon": "mdi:youtube"
-					},
-					{
-						"name": "Twitch",
-						"url": "https://www.twitch.tv/directory/following",
-						"icon": "mdi:twitch"
-					},
-					{
-						"name": "Instagram",
-						"url": "https://instagram.com/",
-						"icon": "mdi:instagram"
-					},
-					{
-						"name": "Kick",
-						"url": "https://kick.com/following",
-						"icon": "simple-icons:kick"
-					}
-				]
-			},
-			{
-				"title": "General",
-				"color": "blue",
-				"align": "left",
-				"links": [
-					{
-						"name": "Amazon",
-						"url": "https://www.amazon.com/",
-						"icon": "mdi:amazon"
-					},
-					{
-						"name": "Privacy Guides",
-						"url": "https://www.privacyguides.org/en/tools/",
-						"icon": "mdi:shield-account"
-					},
-					{
-						"name": "Privacy Tools",
-						"url": "https://www.privacytools.io/",
-						"icon": "mdi:shield-lock"
-					},
-					{
-						"name": "RDForum",
-						"url": "https://www.rdforum.org/",
-						"icon": "mdi:forum"
-					}
-				]
-			},
-			{
-				"title": "Gaming",
-				"color": "red",
-				"align": "left",
-				"links": [
-					{
-						"name": "DIM",
-						"url": "https://app.destinyitemmanager.com/",
-						"icon": "mdi:shield-sword"
-					},
-					{
-						"name": "D2 Checklist",
-						"url": "https://www.d2checklist.com/",
-						"icon": "mdi:clipboard-check"
-					},
-					{
-						"name": "light.gg",
-						"url": "https://www.light.gg/",
-						"icon": "mdi:lightbulb-on"
-					},
-					{
-						"name": "D2 Armor Picker",
-						"url": "https://d2armorpicker.com/#/",
-						"icon": "mdi:shield-half-full"
-					}
-				]
-			},
-			{
-				"title": "Dev",
-				"color": "magenta",
-				"align": "left",
-				"links": [
-					{
-						"name": "Grok AI",
-						"url": "https://grok.com/",
-						"icon": "simple-icons:x"
-					},
-					{
-						"name": "GitHub",
-						"url": "https://github.com",
-						"icon": "mdi:github"
-					},
-					{
-						"name": "GitLab",
-						"url": "https://gitlab.com",
-						"icon": "ph:gitlab-logo-simple-fill"
-					},
-					{
-						"name": "Codeberg",
-						"url": "https://codeberg.org/",
-						"icon": "simple-icons:codeberg"
-					},
-					{
-						"name": "Dev.to",
-						"url": "https://dev.to",
-						"icon": "material-symbols:logo-dev"
-					},
-					{
-						"name": "Stack Overflow",
-						"url": "https://stackoverflow.com/",
-						"icon": "mdi:stack-overflow"
-					}
-				]
-			},
-			{
-				"title": "Self Hosted",
-				"color": "yellow",
-				"align": "left",
-				"links": [
-					{
-						"name": "TeslaUSB",
-						"url": "http://teslausb",
-						"icon": "simple-icons:tesla"
-					},
-					{
-						"name": "UnRaid",
-						"url": "https://192.168.10.10/login",
-						"icon": "mdi:server"
-					},
-					{
-						"name": "Unifi",
-						"url": "https://192.168.10.1/network/default/dashboard",
-						"icon": "mdi:access-point-network"
-					},
-					{
-						"name": "Pi-Hole One",
-						"url": "https://192.168.10.101/admin/",
-						"icon": "mdi:pi-hole"
-					},
-					{
-						"name": "Pi-Hole Two",
-						"url": "https://192.168.10.102/admin/",
-						"icon": "mdi:pi-hole"
-					},
-					{
-						"name": "Archisteamfarm",
-						"url": "http://192.168.10.10:1242/bots",
-						"icon": "mdi:robot"
-					},
-					{
-						"name": "Homebridge",
-						"url": "http://192.168.10.10:8581/login",
-						"icon": "mdi:home-automation"
-					}
-				]
-			}
-		]
-	}
+  "username": "CtrlCmdShft",
+  "title": "CtrlCmdShft Start Page",
+  "theme": {
+    "name": "Default",
+    "backgroundColor": "#121317",
+    "windowColor": "#1e212b",
+    "textColor": "#e2e2e2",
+    "black": "#16161e",
+    "red": "#ec6183",
+    "green": "#2ed8a2",
+    "yellow": "#e8b195",
+    "blue": "#2bc3de",
+    "magenta": "#d1aff8",
+    "cyan": "#62e0e2",
+    "white": "#e2e2e2",
+    "gray": "#97989d"
+  },
+  "wallpaper": {
+    "url": "assets/default-wallpaper.svg",
+    "easing": "ease-in-out",
+    "fadeIn": true,
+    "blur": false
+  },
+  "terminal": {
+    "fixedHeight": true,
+    "windowGlow": true,
+    "windowGlowColor": "#291f3325",
+    "textGlow": false,
+    "opacity": 0,
+    "blur": 16
+  },
+  "prompt": {
+    "ctrlC": true,
+    "placeholder": "command...",
+    "placeholderColor": "gray",
+    "userColor": "green",
+    "atColor": "gray",
+    "hostColor": "magenta",
+    "promptColor": "magenta",
+    "promptSymbol": "❯",
+    "caretColor": "green",
+    "selectionBg": "yellow",
+    "selectionFg": "black"
+  },
+  "fetch": {
+    "timeFormat": "h:mm A",
+    "dateFormat": "MM/DD/YYYY",
+    "titleColor": "yellow",
+    "image": "assets/default-icon.svg",
+    "data": [
+      "Time: {time}",
+      "Date: {date}",
+      "{seperator}",
+      "OS: {osName} {osVersion}",
+      "Theme: {theme}",
+      "{seperator}",
+      "Browser: {browser} {browserVersion}",
+      "Engine: {engineName}",
+      "{seperator}",
+      "{colors}"
+    ]
+  },
+  "urlLaunch": {
+    "target": "_self",
+    "hoverColor": "magenta"
+  },
+  "search": {
+    "default": "https://google.com/search?q={}",
+    "target": "_self",
+    "shortcutRegex": "(!?[A-Za-z0-9]+) (.*)",
+    "shortcuts": [
+      {
+        "alias": "g",
+        "name": "Google Search",
+        "url": "https://google.com/search?q={}"
+      },
+      {
+        "alias": "d",
+        "name": "DuckDuckGo Search",
+        "url": "https://duckduckgo.com/?q={}"
+      },
+      {
+        "alias": "!d",
+        "name": "DuckDuckGo Lucky Search",
+        "url": "https://duckduckgo.com/?q=!ducky+{}"
+      },
+      {
+        "alias": "b",
+        "name": "Brave Search",
+        "url": "https://search.brave.com/search?q={}"
+      },
+      {
+        "alias": "gh",
+        "name": "Github Search",
+        "url": "https://github.com/search?q={}"
+      },
+      {
+        "alias": "s",
+        "name": "Stack Overflow Search",
+        "url": "https://stackoverflow.com/search?q={}"
+      },
+      {
+        "alias": "r",
+        "name": "Subreddit Search",
+        "url": "https://reddit.com/r/{}"
+      },
+      {
+        "alias": "w",
+        "name": "Wikipedia Search",
+        "url": "https://en.wikipedia.org/wiki/{}"
+      }
+    ]
+  },
+  "sections": {
+    "list": [
+      {
+        "title": "eMail",
+        "color": "green",
+        "align": "left",
+        "links": [
+          {
+            "name": "Gmail",
+            "url": "https://mail.google.com/mail/u/0/#inbox",
+            "icon": "mdi:gmail"
+          },
+          {
+            "name": "ProtonMail",
+            "url": "https://mail.proton.me/u/0/inbox",
+            "icon": "simple-icons:protonmail"
+          },
+          {
+            "name": "iCloud Mail",
+            "url": "https://www.icloud.com/mail",
+            "icon": "mdi:apple-icloud"
+          },
+          {
+            "name": "SimpleLogin",
+            "url": "https://app.simplelogin.io/dashboard/",
+            "icon": "simple-icons:simplelogin"
+          }
+        ]
+      },
+      {
+        "title": "Social",
+        "color": "cyan",
+        "align": "left",
+        "links": [
+          {
+            "name": "X",
+            "url": "https://x.com/home",
+            "icon": "mdi:twitter"
+          },
+          {
+            "name": "Reddit",
+            "url": "https://www.reddit.com/?feed=home",
+            "icon": "mdi:reddit"
+          },
+          {
+            "name": "YouTube",
+            "url": "https://www.youtube.com/feed/subscriptions",
+            "icon": "mdi:youtube"
+          },
+          {
+            "name": "Twitch",
+            "url": "https://www.twitch.tv/directory/following",
+            "icon": "mdi:twitch"
+          },
+          {
+            "name": "Instagram",
+            "url": "https://instagram.com/",
+            "icon": "mdi:instagram"
+          },
+          {
+            "name": "Kick",
+            "url": "https://kick.com/following",
+            "icon": "simple-icons:kick"
+          }
+        ]
+      },
+      {
+        "title": "General",
+        "color": "blue",
+        "align": "left",
+        "links": [
+          {
+            "name": "Amazon",
+            "url": "https://www.amazon.com/",
+            "icon": "mdi:amazon"
+          },
+          {
+            "name": "Privacy Guides",
+            "url": "https://www.privacyguides.org/en/tools/",
+            "icon": "mdi:shield-account"
+          },
+          {
+            "name": "Privacy Tools",
+            "url": "https://www.privacytools.io/",
+            "icon": "mdi:shield-lock"
+          },
+          {
+            "name": "RDForum",
+            "url": "https://www.rdforum.org/",
+            "icon": "mdi:forum"
+          }
+        ]
+      },
+      {
+        "title": "Gaming",
+        "color": "red",
+        "align": "left",
+        "links": [
+          {
+            "name": "DIM",
+            "url": "https://app.destinyitemmanager.com/",
+            "icon": "mdi:shield-sword"
+          },
+          {
+            "name": "D2 Checklist",
+            "url": "https://www.d2checklist.com/",
+            "icon": "mdi:clipboard-check"
+          },
+          {
+            "name": "light.gg",
+            "url": "https://www.light.gg/",
+            "icon": "mdi:lightbulb-on"
+          },
+          {
+            "name": "D2 Armor Picker",
+            "url": "https://d2armorpicker.com/#/",
+            "icon": "mdi:shield-half-full"
+          }
+        ]
+      },
+      {
+        "title": "Dev",
+        "color": "magenta",
+        "align": "left",
+        "links": [
+          {
+            "name": "Grok AI",
+            "url": "https://grok.com/",
+            "icon": "simple-icons:x"
+          },
+          {
+            "name": "GitHub",
+            "url": "https://github.com",
+            "icon": "mdi:github"
+          },
+          {
+            "name": "GitLab",
+            "url": "https://gitlab.com",
+            "icon": "ph:gitlab-logo-simple-fill"
+          },
+          {
+            "name": "Codeberg",
+            "url": "https://codeberg.org/",
+            "icon": "simple-icons:codeberg"
+          },
+          {
+            "name": "Dev.to",
+            "url": "https://dev.to",
+            "icon": "material-symbols:logo-dev"
+          },
+          {
+            "name": "Stack Overflow",
+            "url": "https://stackoverflow.com/",
+            "icon": "mdi:stack-overflow"
+          }
+        ]
+      },
+      {
+        "title": "Self Hosted",
+        "color": "yellow",
+        "align": "left",
+        "links": [
+          {
+            "name": "TeslaUSB",
+            "url": "http://teslausb",
+            "icon": "simple-icons:tesla"
+          },
+          {
+            "name": "UnRaid",
+            "url": "https://192.168.10.10/login",
+            "icon": "mdi:server"
+          },
+          {
+            "name": "Unifi",
+            "url": "https://192.168.10.1/network/default/dashboard",
+            "icon": "mdi:access-point-network"
+          },
+          {
+            "name": "Pi-Hole One",
+            "url": "https://192.168.10.101/admin/",
+            "icon": "mdi:pi-hole"
+          },
+          {
+            "name": "Pi-Hole Two",
+            "url": "https://192.168.10.102/admin/",
+            "icon": "mdi:pi-hole"
+          },
+          {
+            "name": "Archisteamfarm",
+            "url": "http://192.168.10.10:1242/bots",
+            "icon": "mdi:robot"
+          },
+          {
+            "name": "Homebridge",
+            "url": "http://192.168.10.10:8581/login",
+            "icon": "mdi:home-automation"
+          }
+        ]
+      }
+    ]
+  }
 }
