@@ -48,7 +48,7 @@ const Terminal = () => {
 
 		if (cmd === "help") {
 			return <Help closeCallback={closeWindow} />
-		} else if (cmd === "shortcuts") {
+		} else if (cmd === "shortcuts" || cmd === "?") {
 			return <KeyboardShortcuts closeCallback={closeWindow} />
 		} else if (cmd === "themes") {
 			return <ThemePreviewer closeCallback={closeWindow} />

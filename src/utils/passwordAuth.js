@@ -73,22 +73,82 @@ export function isAuthenticated() {
 /**
  * Set authentication status with optional persistence
  * @param {boolean} status - Authentication status
- * @param {boolean} remember - If true, persist for 30 days. If false, session only.
+ * @param {boolean} remember - If true, persist for 7 days. If false, session only.
  */
 export function setAuthenticated(status, remember = false) {
 	if (typeof window === "undefined") return
 
 	if (status) {
 		if (remember) {
-			const expiresAt = Date.now() + 30 * 24 * 60 * 60 * 1000 // 30 days
+			const expiresAt = Date.now() + 7 * 24 * 60 * 60 * 1000 // 7 days
 			localStorage.setItem("auth", JSON.stringify({ authenticated: true, expiresAt }))
 			sessionStorage.removeItem("authenticated")
 		} else {
 			sessionStorage.setItem("authenticated", "true")
 			localStorage.removeItem("auth")
 		}
+		// Clear failed attempts on successful login
+		clearFailedAttempts()
 	} else {
 		localStorage.removeItem("auth")
 		sessionStorage.removeItem("authenticated")
 	}
+}
+
+/**
+ * Get failed attempt count
+ * @returns {number} Number of failed attempts
+ */
+export function getFailedAttempts() {
+	if (typeof window === "undefined") return 0
+	const attempts = localStorage.getItem("failedAttempts")
+	return attempts ? parseInt(attempts, 10) : 0
+}
+
+/**
+ * Increment failed attempt count
+ * @returns {number} New attempt count
+ */
+export function incrementFailedAttempts() {
+	if (typeof window === "undefined") return 0
+	const current = getFailedAttempts()
+	const newCount = current + 1
+	localStorage.setItem("failedAttempts", newCount.toString())
+	return newCount
+}
+
+/**
+ * Clear failed attempts
+ */
+export function clearFailedAttempts() {
+	if (typeof window === "undefined") return
+	localStorage.removeItem("failedAttempts")
+	localStorage.removeItem("lockoutUntil")
+}
+
+/**
+ * Check if account is locked out
+ * @returns {number} Time remaining in seconds, 0 if not locked
+ */
+export function getLockoutTimeRemaining() {
+	if (typeof window === "undefined") return 0
+	const lockoutUntil = localStorage.getItem("lockoutUntil")
+	if (!lockoutUntil) return 0
+	
+	const remaining = parseInt(lockoutUntil, 10) - Date.now()
+	if (remaining <= 0) {
+		clearFailedAttempts()
+		return 0
+	}
+	return Math.ceil(remaining / 1000)
+}
+
+/**
+ * Set lockout timer
+ * @param {number} seconds - Seconds to lock out for
+ */
+export function setLockout(seconds) {
+	if (typeof window === "undefined") return
+	const lockoutUntil = Date.now() + (seconds * 1000)
+	localStorage.setItem("lockoutUntil", lockoutUntil.toString())
 }

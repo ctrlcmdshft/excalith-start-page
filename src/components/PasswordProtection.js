@@ -1,8 +1,19 @@
 import React, { useState, useEffect } from "react"
 import Image from "next/image"
-import { verifyPassword, setAuthenticated } from "@/utils/passwordAuth"
+import { 
+	verifyPassword, 
+	setAuthenticated, 
+	getFailedAttempts, 
+	incrementFailedAttempts, 
+	getLockoutTimeRemaining, 
+	setLockout
+} from "@/utils/passwordAuth"
 import { useSettings } from "@/context/settings"
 import { fetchAsset } from "@/utils/fetchAsset"
+import Prompt from "@/components/Prompt"
+
+const MAX_ATTEMPTS = 5
+const LOCKOUT_DURATION = 300 // 5 minutes in seconds
 
 export default function PasswordProtection({ onAuthenticated }) {
 	const [password, setPassword] = useState("")
@@ -11,6 +22,10 @@ export default function PasswordProtection({ onAuthenticated }) {
 	const [passwordHash, setPasswordHash] = useState(null)
 	const [wallpaper, setWallpaper] = useState(null)
 	const [isLoaded, setIsLoaded] = useState(false)
+	const [showPassword, setShowPassword] = useState(false)
+	const [failedAttempts, setFailedAttempts] = useState(0)
+	const [lockoutTime, setLockoutTime] = useState(0)
+	const [isAnimating, setIsAnimating] = useState(false)
 	const { settings } = useSettings()
 
 	useEffect(() => {
@@ -25,6 +40,13 @@ export default function PasswordProtection({ onAuthenticated }) {
 			.catch((err) => {
 				console.error("Failed to load password config:", err)
 			})
+
+		// Load failed attempts and lockout status
+		setFailedAttempts(getFailedAttempts())
+		setLockoutTime(getLockoutTimeRemaining())
+
+		// Trigger entrance animation
+		setTimeout(() => setIsAnimating(true), 100)
 	}, [])
 
 	useEffect(() => {
@@ -42,9 +64,32 @@ export default function PasswordProtection({ onAuthenticated }) {
 			})
 	}, [settings])
 
+	// Lockout timer countdown
+	useEffect(() => {
+		if (lockoutTime <= 0) return
+		
+		const timer = setInterval(() => {
+			const remaining = getLockoutTimeRemaining()
+			setLockoutTime(remaining)
+			if (remaining <= 0) {
+				setFailedAttempts(0)
+				setError("")
+			}
+		}, 1000)
+
+		return () => clearInterval(timer)
+	}, [lockoutTime])
+
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 		setError("")
+
+		// Check lockout
+		const lockout = getLockoutTimeRemaining()
+		if (lockout > 0) {
+			setError(`Too many failed attempts. Try again in ${lockout}s`)
+			return
+		}
 
 		if (!passwordHash) {
 			setError("Password not configured")
@@ -55,14 +100,29 @@ export default function PasswordProtection({ onAuthenticated }) {
 		const isValid = await verifyPassword(password, passwordHash)
 		if (isValid) {
 			setAuthenticated(true, rememberMe)
-			onAuthenticated()
+			// Smooth exit animation
+			setIsAnimating(false)
+			setTimeout(() => onAuthenticated(), 300)
 		} else {
-			setError("Invalid password")
+			const newAttempts = incrementFailedAttempts()
+			setFailedAttempts(newAttempts)
+			
+			const remainingAttempts = MAX_ATTEMPTS - newAttempts
+			
+			if (remainingAttempts <= 0) {
+				setLockout(LOCKOUT_DURATION)
+				setLockoutTime(LOCKOUT_DURATION)
+				setError(`Too many failed attempts. Locked out for ${LOCKOUT_DURATION / 60} minutes`)
+			} else {
+				setError(`Invalid password (${remainingAttempts} attempt${remainingAttempts !== 1 ? 's' : ''} remaining)`)
+			}
 			setPassword("")
 		}
 	}
 
 	if (!settings) return null
+
+	const isLockedOut = lockoutTime > 0
 
 	return (
 		<div className="fixed inset-0 z-50">
@@ -82,82 +142,99 @@ export default function PasswordProtection({ onAuthenticated }) {
 				/>
 			)}
 			<div
-				className="absolute inset-0 flex items-center justify-center backdrop-blur-sm"
-				style={{ backgroundColor: settings.theme.backgroundColor + "80" }}>
-				<div
-					className="w-full max-w-md p-10 backdrop-blur-md rounded-2xl shadow-2xl"
-					style={{
-						backgroundColor: settings.theme.windowColor + "dd",
-						borderColor: settings.theme.gray + "80",
-						borderWidth: "1px"
-					}}>
-					<div className="text-center mb-8">
-						<div className="text-6xl mb-4">🔒</div>
-						<h2
-							className="text-3xl font-semibold"
-							style={{ color: settings.theme.textColor }}>
-							Password Required
-						</h2>
+				className={`absolute w-full h-fit inset-x-0 inset-y-0 m-auto shadow-lg rounded-terminal bg-window-color max-w-terminal p-terminal transition-all duration-300 ${
+					settings.terminal.windowGlow && "window-glow"
+				} ${isAnimating ? "opacity-100 scale-100" : "opacity-0 scale-95"}`}>
+				<div className="h-full overflow-y-auto text-textColor">
+					<div>
+						<span>
+							<Prompt command="lock" />
+						</span>
+
+						<div className="mt-line">
+							<span className="text-yellow">Authentication Required</span>
+						</div>
+
+
+						<div className="mt-line" style={{ borderTopColor: settings.theme.gray + "30", borderTopWidth: "1px", paddingTop: "1rem" }}>
+							<form onSubmit={handleSubmit}>
+								<div className="mb-4">
+									<div className="flex items-center gap-2 mb-1">
+										<span className="text-blue">password</span>
+										<span className="text-gray">»</span>
+									</div>
+									<div className="relative">
+										<input
+											type={showPassword ? "text" : "password"}
+											value={password}
+											onChange={(e) => setPassword(e.target.value)}
+											autoFocus
+											disabled={isLockedOut}
+											className="w-full bg-transparent border-b focus:outline-none py-1 px-1 pr-8 disabled:opacity-50"
+											style={{
+												color: settings.theme.textColor,
+												borderColor: settings.theme.gray + "40"
+											}}
+											onFocus={(e) => !isLockedOut && (e.currentTarget.style.borderColor = settings.theme.blue)}
+											onBlur={(e) => e.currentTarget.style.borderColor = settings.theme.gray + "40"}
+										/>
+										<button
+											type="button"
+											onClick={() => setShowPassword(!showPassword)}
+											disabled={isLockedOut}
+											className="absolute right-0 top-1/2 -translate-y-1/2 text-sm hover:opacity-80 disabled:opacity-30"
+											style={{ color: settings.theme.blue }}>
+											{showPassword ? "👁️" : "👁️‍🗨️"}
+										</button>
+									</div>
+								</div>
+
+								{error && (
+									<div className="mb-4 flex items-center gap-2">
+										<span className="text-red">✗</span>
+										<span className="text-red">{error}</span>
+									</div>
+								)}
+
+								{failedAttempts > 0 && !isLockedOut && (
+									<div className="mb-4 flex items-center gap-2">
+										<span className="text-yellow">⚠</span>
+										<span className="text-yellow text-sm">
+											{failedAttempts} failed attempt{failedAttempts !== 1 ? 's' : ''}
+										</span>
+									</div>
+								)}
+
+								<div className="flex items-center gap-2 mb-4">
+									<input
+										type="checkbox"
+										id="rememberMe"
+										checked={rememberMe}
+										onChange={(e) => setRememberMe(e.target.checked)}
+										disabled={isLockedOut}
+										className="w-4 h-4 cursor-pointer disabled:opacity-50"
+										style={{
+											accentColor: settings.theme.blue
+										}}
+									/>
+									<label
+										htmlFor="rememberMe"
+										className="text-sm cursor-pointer select-none"
+										style={{ color: settings.theme.gray, opacity: isLockedOut ? 0.5 : 1 }}>
+										Remember me for 7 days
+									</label>
+								</div>
+
+								<div className="flex items-center gap-2" style={{ borderTopColor: settings.theme.gray + "30", borderTopWidth: "1px", paddingTop: "0.75rem" }}>
+									<span className="text-gray">Press</span>
+									<span className="px-2 py-0.5 rounded text-xs" style={{ backgroundColor: settings.theme.blue + "20", color: settings.theme.blue, borderColor: settings.theme.blue + "40", borderWidth: "1px" }}>
+										ENTER
+									</span>
+									<span className="text-gray">to authenticate</span>
+								</div>
+							</form>
+						</div>
 					</div>
-					<form onSubmit={handleSubmit} className="space-y-5">
-						<div>
-							<input
-								type="password"
-								value={password}
-								onChange={(e) => setPassword(e.target.value)}
-								placeholder="Enter password..."
-								autoFocus
-								className="w-full px-5 py-4 rounded-xl focus:outline-none focus:ring-2 focus:ring-opacity-50 transition-all"
-								style={{
-									backgroundColor: settings.theme.black + "cc",
-									borderColor: settings.theme.gray,
-									borderWidth: "1px",
-									color: settings.theme.textColor
-								}}
-							/>
-						</div>
-						{error && (
-							<div
-								className="text-sm text-center font-medium animate-pulse py-2 rounded-lg"
-								style={{
-									color: settings.theme.red,
-									backgroundColor: settings.theme.red + "20",
-									borderColor: settings.theme.red + "60",
-									borderWidth: "1px"
-								}}>
-								{error}
-							</div>
-						)}
-						<div className="flex items-center gap-2">
-							<input
-								type="checkbox"
-								id="rememberMe"
-								checked={rememberMe}
-								onChange={(e) => setRememberMe(e.target.checked)}
-								className="w-4 h-4 cursor-pointer rounded"
-								style={{
-									accentColor: settings.theme.blue
-								}}
-							/>
-							<label
-								htmlFor="rememberMe"
-								className="text-sm cursor-pointer select-none"
-								style={{ color: settings.theme.textColor }}>
-								Remember me for 30 days
-							</label>
-						</div>
-						<button
-							type="submit"
-							className="w-full py-4 font-semibold rounded-xl transition-all duration-200 shadow-lg hover:shadow-xl transform hover:scale-[1.02]"
-							style={{
-								backgroundColor: settings.theme.blue,
-								color: settings.theme.white
-							}}
-							onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.9")}
-							onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}>
-							Unlock
-						</button>
-					</form>
 				</div>
 			</div>
 		</div>

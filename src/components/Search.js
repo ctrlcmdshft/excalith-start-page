@@ -21,6 +21,7 @@ const Search = ({ commandChange, selectionChange }) => {
 		"help",
 		"fetch",
 		"shortcuts",
+		"?",
 		"themes",
 		"config",
 		"config help",
@@ -103,13 +104,24 @@ const Search = ({ commandChange, selectionChange }) => {
 				setSuggestion(selectedItem)
 				selectionChange(selectedItem)
 			}
-			// Next Selection
+			// Next Selection / Auto Complete
 			else if (e.key === "Tab") {
 				e.preventDefault()
 
 				if (command === "") return
 				if (filteredItems.length === 0) return
 
+				// If only one match, auto-complete it
+				if (filteredItems.length === 1 && suggestion !== "") {
+					inputRef.current.value = suggestion
+					setCommand(suggestion)
+					commandChange(suggestion)
+					selectionChange("")
+					setSuggestion("")
+					return
+				}
+
+				// Otherwise, cycle through matches
 				let idx = -1
 				if (selection && selection !== "")
 					idx = filteredItems.indexOf(selection.toLowerCase())

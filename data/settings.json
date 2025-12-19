@@ -44,8 +44,8 @@
 		"selectionFg": "black"
 	},
 	"fetch": {
-		"timeFormat": "HH:mm",
-		"dateFormat": "DD/MM/YYYY",
+		"timeFormat": "h:mm A",
+		"dateFormat": "MM/DD/YYYY",
 		"titleColor": "yellow",
 		"image": "assets/default-icon.svg",
 		"data": [
