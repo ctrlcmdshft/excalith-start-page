@@ -109,6 +109,8 @@ export default function Home() {
 
 	const handleAuthenticated = () => {
 		setShowPasswordProtection(false)
+		// Use replace for faster reload
+		window.location.replace(window.location.href);
 	}
 
 	if (checkingAuth) {

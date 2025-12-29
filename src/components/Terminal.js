@@ -18,7 +18,7 @@ const Terminal = () => {
 	const { settings } = useSettings()
 
 	useEffect(() => {
-		if (settings.terminal.fixedHeight) {
+		if (settings && settings.terminal && settings.terminal.fixedHeight) {
 			const clientHeight = windowRef.current.clientHeight
 			setWindowHeight({
 				height: clientHeight

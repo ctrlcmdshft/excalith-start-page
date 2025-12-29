@@ -117,9 +117,7 @@ export default function PasswordProtection({ onAuthenticated }) {
 			if (response.ok && data.success) {
 				// Also set local authentication for client-side checks
 				setAuthenticated(true, rememberMe)
-				// Smooth exit animation
-				setIsAnimating(false)
-				setTimeout(() => onAuthenticated(), 300)
+				onAuthenticated();
 			} else {
 				// Handle failed login
 				const newAttempts = incrementFailedAttempts()
