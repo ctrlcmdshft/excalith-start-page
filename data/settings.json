@@ -276,32 +276,32 @@
         "links": [
           {
             "name": "UnRaid",
-            "url": "https://192.168.10.10/login",
+            "url": "https://unraid.sekrit.app",
             "icon": "mdi:server"
           },
           {
             "name": "Unifi",
-            "url": "https://192.168.10.1/network/default/dashboard",
+            "url": "https://unifi.sekrit.app",
             "icon": "mdi:access-point-network"
           },
           {
             "name": "Pi-Hole One",
-            "url": "https://192.168.10.101/admin/",
+            "url": "https://pihole1.sekrit.app",
             "icon": "mdi:pi-hole"
           },
           {
             "name": "Pi-Hole Two",
-            "url": "https://192.168.10.102/admin/",
+            "url": "https://pihole2.sekrit.app",
             "icon": "mdi:pi-hole"
           },
           {
             "name": "Archisteamfarm",
-            "url": "http://192.168.10.10:1242/bots",
+            "url": "https://asf.sekrit.app",
             "icon": "mdi:robot"
           },
           {
             "name": "Homebridge",
-            "url": "http://192.168.10.10:8581/login",
+            "url": "https://homebridge.sekrit.app",
             "icon": "mdi:home-automation"
           }
         ]
