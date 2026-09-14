@@ -51,6 +51,9 @@ const Help = ({ closeCallback }) => {
 						<span className="text-blue">fetch</span> Display browser information
 					</li>
 					<li>
+						<span className="text-blue">settings</span> Open common settings
+					</li>
+					<li>
 						<span className="text-blue">theme &lt;name&gt;</span> Switch theme directly
 					</li>
 					<li>

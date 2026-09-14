@@ -8,6 +8,7 @@ import { RunCommand } from "@/utils/command"
 const Help = dynamic(() => import("@/components/Help"))
 const Config = dynamic(() => import("@/components/Config"))
 const Fetch = dynamic(() => import("@/components/Fetch"))
+const SettingsPanel = dynamic(() => import("@/components/SettingsPanel"))
 
 const Terminal = () => {
 	const windowRef = useRef(null)
@@ -51,6 +52,8 @@ const Terminal = () => {
 			return <Config commands={commands} closeCallback={closeWindow} />
 		} else if (cmd === "fetch") {
 			return <Fetch closeCallback={closeWindow} />
+		} else if (cmd === "settings") {
+			return <SettingsPanel closeCallback={closeWindow} />
 		} else {
 			return <List />
 		}

@@ -3,7 +3,7 @@ import { openLink } from "@/utils/openLink"
 import { publish } from "@/utils/event"
 import { fuzzyScore } from "@/utils/fuzzy"
 
-const registeredCommands = ["list", "help", "fetch", "config"]
+const registeredCommands = ["list", "help", "fetch", "config", "settings"]
 
 const builtInSearchShortcuts = [
 	{ alias: "yt", url: "https://www.youtube.com/results?search_query={}" },
