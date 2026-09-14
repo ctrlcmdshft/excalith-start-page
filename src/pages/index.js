@@ -10,7 +10,6 @@ import { fetchAsset } from "@/utils/fetchAsset"
 export default function Home() {
 	const { settings } = useSettings()
 	const [wallpaper, setWallpaper] = useState(null)
-	const [isReady, setIsReady] = useState(false)
 	const [isLoaded, setIsLoaded] = useState(false)
 
 	useEffect(() => {
@@ -79,13 +78,11 @@ export default function Home() {
 			.catch((error) => {
 				console.error("Failed to fetch wallpaper:", error)
 			})
-
-		setIsReady(true)
 	}, [settings])
 
 	return (
 		<main className={"transition-all duration-200 ease-in-out"}>
-			{isReady && (
+			{settings && (
 				<>
 					<Meta />
 					{wallpaper && (

@@ -12,7 +12,10 @@ export const SettingsContext = createContext({
 export const useSettings = () => useContext(SettingsContext)
 
 export const SettingsProvider = ({ children }) => {
-	const [settings, setSettings] = useState()
+	// Render with the bundled config immediately. Browser storage or the Docker
+	// API replaces it once available, which prevents a blank first paint.
+	const [settings, setSettings] = useState(defaultConfig)
+	const [settingsLoaded, setSettingsLoaded] = useState(false)
 	const [items, setItems] = useState([])
 
 	// Load settings
@@ -23,19 +26,21 @@ export const SettingsProvider = ({ children }) => {
 			fetch("/api/loadSettings")
 				.then((response) => response.json())
 				.then((data) => setSettings(data))
-				.catch(() => setSettings(defaultConfig))
+				.catch(() => {})
+				.finally(() => setSettingsLoaded(true))
 		} else {
 			data = localStorage.getItem(SETTINGS_KEY)
 			if (data === "undefined") {
 				console.log("LocalStorage configuration reset to defaults.")
 			}
-			setSettings(data ? JSON.parse(data) : defaultConfig)
+			if (data && data !== "undefined") setSettings(JSON.parse(data))
+			setSettingsLoaded(true)
 		}
 	}, [])
 
 	// Save settings
 	useEffect(() => {
-		if (settings && settings !== "undefined") {
+		if (settingsLoaded && settings && settings !== "undefined") {
 			if (IS_DOCKER) {
 				fetch("/api/saveSettings", {
 					method: "POST",
@@ -79,7 +84,7 @@ export const SettingsProvider = ({ children }) => {
 			})
 			setItems(filterArr)
 		}
-	}, [settings])
+	}, [settings, settingsLoaded])
 
 	// Update settings
 	const updateSettings = async (newSettings) => {
