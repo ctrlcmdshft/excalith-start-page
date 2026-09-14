@@ -4,6 +4,17 @@ import defaultConfig from "data/settings"
 const SETTINGS_KEY = "settings"
 const IS_DOCKER = process.env.BUILD_MODE === "docker"
 
+const mergeDefaults = (defaults, saved) => {
+	if (Array.isArray(defaults) || Array.isArray(saved)) return saved ?? defaults
+	if (defaults && typeof defaults === "object" && saved && typeof saved === "object") {
+		return Object.keys(defaults).reduce(
+			(result, key) => ({ ...result, [key]: mergeDefaults(defaults[key], saved[key]) }),
+			{ ...saved }
+		)
+	}
+	return saved ?? defaults
+}
+
 export const SettingsContext = createContext({
 	settings: undefined,
 	setSettings: (settings) => {}
@@ -25,7 +36,7 @@ export const SettingsProvider = ({ children }) => {
 		if (IS_DOCKER) {
 			fetch("/api/loadSettings")
 				.then((response) => response.json())
-				.then((data) => setSettings(data))
+				.then((data) => setSettings(mergeDefaults(defaultConfig, data)))
 				.catch(() => {})
 				.finally(() => setSettingsLoaded(true))
 		} else {
@@ -33,7 +44,8 @@ export const SettingsProvider = ({ children }) => {
 			if (data === "undefined") {
 				console.log("LocalStorage configuration reset to defaults.")
 			}
-			if (data && data !== "undefined") setSettings(JSON.parse(data))
+			if (data && data !== "undefined")
+				setSettings(mergeDefaults(defaultConfig, JSON.parse(data)))
 			setSettingsLoaded(true)
 		}
 	}, [])
@@ -88,7 +100,7 @@ export const SettingsProvider = ({ children }) => {
 
 	// Update settings
 	const updateSettings = async (newSettings) => {
-		await setSettings(newSettings)
+		await setSettings(mergeDefaults(defaultConfig, newSettings))
 	}
 
 	// Reset settings
