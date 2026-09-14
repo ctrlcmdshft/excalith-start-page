@@ -4,6 +4,12 @@ import { publish } from "@/utils/event"
 
 const registeredCommands = ["list", "help", "fetch", "config"]
 
+const builtInSearchShortcuts = [
+	{ alias: "yt", url: "https://www.youtube.com/results?search_query={}" },
+	{ alias: "npm", url: "https://www.npmjs.com/search?q={}" },
+	{ alias: "maps", url: "https://www.google.com/maps/search/{}" }
+]
+
 export function RunCommand(command, settings) {
 	if (command === "") return false
 	const cmd_split = command.split(" ")
@@ -63,8 +69,15 @@ function tryParseSearchShortcut(command, settings) {
 	if (matchAll.length === 0) return false
 
 	let regex_cmd = matchAll[0]
-	for (var i = 0; i < settings.search.shortcuts.length; i++) {
-		const commandData = settings.search.shortcuts[i]
+	const shortcuts = [
+		...settings.search.shortcuts,
+		...builtInSearchShortcuts.filter(
+			(shortcut) => !settings.search.shortcuts.some((item) => item.alias === shortcut.alias)
+		)
+	]
+
+	for (var i = 0; i < shortcuts.length; i++) {
+		const commandData = shortcuts[i]
 		const name = commandData.alias
 
 		if (name === regex_cmd[1]) {

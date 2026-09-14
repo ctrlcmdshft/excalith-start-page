@@ -5,7 +5,7 @@ import Terminal from "@/components/Terminal"
 import "@fontsource/fira-code/400.css"
 import "@fontsource/fira-code/600.css"
 import { useSettings } from "@/context/settings"
-import { fetchAsset } from "@/utils/fetchAsset"
+import { cacheAsset, fetchAsset, getCachedAsset } from "@/utils/fetchAsset"
 
 export default function Home() {
 	const { settings } = useSettings()
@@ -68,16 +68,31 @@ export default function Home() {
 			document.body.classList.remove("text-glow")
 		}
 
-		// Set Wallpaper
+		// Set wallpaper from Cache Storage when available, while keeping the
+		// normal URL as an immediate fallback for the first visit.
+		let active = true
+		let objectUrl
 		fetchAsset(settings.wallpaper.url)
-			.then((data) => {
-				if (data) {
-					setWallpaper(data)
+			.then(async (assetUrl) => {
+				if (!assetUrl || !active) return
+
+				setWallpaper(assetUrl)
+				cacheAsset(assetUrl)
+
+				const cachedUrl = await getCachedAsset(assetUrl)
+				if (cachedUrl && active) {
+					objectUrl = cachedUrl
+					setWallpaper(cachedUrl)
 				}
 			})
 			.catch((error) => {
 				console.error("Failed to fetch wallpaper:", error)
 			})
+
+		return () => {
+			active = false
+			if (objectUrl) URL.revokeObjectURL(objectUrl)
+		}
 	}, [settings])
 
 	return (
