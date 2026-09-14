@@ -66,9 +66,12 @@ export const SettingsProvider = ({ children }) => {
 			}
 
 			let filterArr = [
+				"list",
 				"help",
 				"fetch",
 				"config",
+				"settings",
+				"theme",
 				"config help",
 				"config edit",
 				"config import",
