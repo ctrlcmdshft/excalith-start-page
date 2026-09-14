@@ -1,6 +1,7 @@
 import { isURL } from "@/utils/isURL"
 import { openLink } from "@/utils/openLink"
 import { publish } from "@/utils/event"
+import { fuzzyScore } from "@/utils/fuzzy"
 
 const registeredCommands = ["list", "help", "fetch", "config"]
 
@@ -14,7 +15,9 @@ export function RunCommand(command, settings) {
 	if (command === "") return false
 	const cmd_split = command.split(" ")
 
-	if (registeredCommands.includes(cmd_split[0])) {
+	if (cmd_split[0] === "theme") {
+		publish("command", ["config", "theme", ...cmd_split.slice(1)])
+	} else if (registeredCommands.includes(cmd_split[0])) {
 		publish("command", cmd_split)
 	} else if (isURL(command)) {
 		openLink(
@@ -34,7 +37,7 @@ function openFilteredLinks(command, settings) {
 		{
 			section.links.map((link) => {
 				{
-					if (link.name.toLowerCase().startsWith(command)) {
+					if (fuzzyScore(command, link.name) !== null) {
 						filteredUrls.push(link.url)
 					}
 				}

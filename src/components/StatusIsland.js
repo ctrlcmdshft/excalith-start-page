@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react"
+import { useSettings } from "@/context/settings"
 
 const weatherLabels = {
 	0: ["Clear", "☀"],
@@ -33,6 +34,9 @@ const StatusIsland = () => {
 	const [now, setNow] = useState(null)
 	const [weather, setWeather] = useState(null)
 	const [weatherError, setWeatherError] = useState(false)
+	const [isOnline, setIsOnline] = useState(true)
+	const { settings } = useSettings()
+	const status = settings.status || { clock: true, date: false, weather: true }
 	const location = useMemo(() => getLocationLabel(), [])
 
 	useEffect(() => {
@@ -43,7 +47,18 @@ const StatusIsland = () => {
 	}, [])
 
 	useEffect(() => {
-		if (!navigator.geolocation) {
+		const updateOnline = () => setIsOnline(navigator.onLine)
+		updateOnline()
+		window.addEventListener("online", updateOnline)
+		window.addEventListener("offline", updateOnline)
+		return () => {
+			window.removeEventListener("online", updateOnline)
+			window.removeEventListener("offline", updateOnline)
+		}
+	}, [])
+
+	useEffect(() => {
+		if (!status.weather || !navigator.geolocation) {
 			setWeatherError(true)
 			return
 		}
@@ -72,7 +87,7 @@ const StatusIsland = () => {
 			() => setWeatherError(true),
 			{ maximumAge: 900_000, timeout: 5_000 }
 		)
-	}, [])
+	}, [status.weather])
 
 	const weatherInfo = weatherLabels[weather?.code] || ["Weather unavailable", "·"]
 
@@ -80,14 +95,26 @@ const StatusIsland = () => {
 		<aside
 			className="fixed top-4 right-4 z-20 rounded-terminal bg-window-color px-4 py-2 text-right shadow-lg"
 			aria-label="Local time and weather">
-			<div className="text-lg text-textColor tabular-nums">
-				{now ? now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" }) : "--:--"}
-			</div>
-			<div className="text-xs text-gray">
-				{weather && `${weatherInfo[1]} ${weather.temperature}°F · `}
-				{weatherError && !weather ? "Weather unavailable · " : ""}
-				{location}
-			</div>
+			{status.clock && (
+				<div className="text-lg text-textColor tabular-nums">
+					{now
+						? now.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })
+						: "--:--"}
+				</div>
+			)}
+			{status.date && (
+				<div className="text-xs text-gray">
+					{now?.toLocaleDateString([], { dateStyle: "medium" })}
+				</div>
+			)}
+			{status.weather && (
+				<div className="text-xs text-gray">
+					{weather && `${weatherInfo[1]} ${weather.temperature}°F · `}
+					{weatherError && !weather ? "Weather unavailable · " : ""}
+					{location}
+				</div>
+			)}
+			{!isOnline && <div className="text-xs text-yellow">Offline mode</div>}
 		</aside>
 	)
 }

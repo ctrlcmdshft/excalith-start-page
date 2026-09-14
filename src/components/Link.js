@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react"
 import { useSettings } from "@/context/settings"
 import { Icon } from "@iconify/react"
+import { fuzzyScore } from "@/utils/fuzzy"
 
 const Link = ({ linkData, filter, selection }) => {
 	const { settings } = useSettings()
@@ -13,17 +14,17 @@ const Link = ({ linkData, filter, selection }) => {
 	const icon = linkData.icon
 	const target = settings.urlLaunch.target
 
-	useEffect(() => {
+	;(useEffect(() => {
 		const lower_command = filter.toLowerCase()
 
 		if (lower_command) {
-			const isFiltered = lower_name.startsWith(lower_command)
+			const isFiltered = fuzzyScore(lower_command, lower_name) !== null
 			setHidden(!isFiltered)
 		} else {
 			setHidden(false)
 		}
 	}, [filter, lower_name, target, url]),
-		[filter]
+		[filter])
 
 	useEffect(() => {
 		setSelected(lower_name === selection)

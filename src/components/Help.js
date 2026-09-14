@@ -14,6 +14,7 @@ const Help = ({ closeCallback }) => {
 				<span className="block mt-line text-green">Usage</span>
 				<ul>
 					<li>- Filter links by typing in the prompt</li>
+					<li>- Link filtering supports fuzzy matches, such as `git hub` for GitHub</li>
 					<li>- Unfiltered prompt will search using default search engine</li>
 					<li>- Launch URL's directly from prompt</li>
 				</ul>
@@ -48,6 +49,9 @@ const Help = ({ closeCallback }) => {
 					</li>
 					<li>
 						<span className="text-blue">fetch</span> Display browser information
+					</li>
+					<li>
+						<span className="text-blue">theme &lt;name&gt;</span> Switch theme directly
 					</li>
 					<li>
 						<span className="text-blue">config</span> Configuration settings

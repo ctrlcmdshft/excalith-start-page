@@ -2,6 +2,7 @@ import React, { useRef, useEffect, useState } from "react"
 import { RunCommand, DefaultSearch } from "@/utils/command"
 import Prompt from "@/components/Prompt"
 import { useSettings } from "@/context/settings"
+import { fuzzyScore } from "@/utils/fuzzy"
 
 const Search = ({ commandChange, selectionChange }) => {
 	const inputRef = useRef(null)
@@ -101,7 +102,11 @@ const Search = ({ commandChange, selectionChange }) => {
 		if (command === "") {
 			selectionChange("")
 		} else {
-			const filtered = items.filter((item) => item.startsWith(command))
+			const filtered = items
+				.map((item) => ({ item, score: fuzzyScore(command, item) }))
+				.filter(({ score }) => score !== null)
+				.sort((a, b) => a.score - b.score)
+				.map(({ item }) => item)
 			setFilteredItems(filtered)
 		}
 		// eslint-disable-next-line

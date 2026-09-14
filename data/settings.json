@@ -22,6 +22,11 @@
 		"fadeIn": true,
 		"blur": false
 	},
+	"status": {
+		"clock": true,
+		"date": false,
+		"weather": true
+	},
 	"terminal": {
 		"fixedHeight": true,
 		"windowGlow": true,
