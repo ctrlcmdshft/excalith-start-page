@@ -6,9 +6,13 @@ import { fuzzyScore } from "@/utils/fuzzy"
 const registeredCommands = ["list", "help", "fetch", "config", "settings"]
 
 export const builtInSearchShortcuts = [
-	{ alias: "yt", url: "https://www.youtube.com/results?search_query={}" },
-	{ alias: "npm", url: "https://www.npmjs.com/search?q={}" },
-	{ alias: "maps", url: "https://www.google.com/maps/search/{}" }
+	{
+		alias: "yt",
+		name: "YouTube Search",
+		url: "https://www.youtube.com/results?search_query={}"
+	},
+	{ alias: "npm", name: "npm Package Search", url: "https://www.npmjs.com/search?q={}" },
+	{ alias: "maps", name: "Google Maps Search", url: "https://www.google.com/maps/search/{}" }
 ]
 
 export function RunCommand(command, settings) {
