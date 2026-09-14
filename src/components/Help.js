@@ -1,5 +1,6 @@
 import Prompt from "@/components/Prompt"
 import { useSettings } from "@/context/settings"
+import { builtInSearchShortcuts } from "@/utils/command"
 
 const Help = ({ closeCallback }) => {
 	const { settings } = useSettings()
@@ -17,6 +18,10 @@ const Help = ({ closeCallback }) => {
 					<li>- Link filtering supports fuzzy matches, such as `git hub` for GitHub</li>
 					<li>- Unfiltered prompt will search using default search engine</li>
 					<li>- Launch URL's directly from prompt</li>
+					<li>
+						- The page and cached wallpapers remain available offline after the first
+						visit
+					</li>
 				</ul>
 
 				<span className="block mt-line text-green">Key Bindings</span>
@@ -44,6 +49,9 @@ const Help = ({ closeCallback }) => {
 
 				<span className="block mt-line text-green">Built-in Commands</span>
 				<ul>
+					<li>
+						<span className="text-blue">list</span> Return to the link list
+					</li>
 					<li>
 						<span className="text-blue">help</span> Display this help
 					</li>
@@ -88,7 +96,15 @@ const Help = ({ closeCallback }) => {
 
 				<span className="block mt-line text-green">Search Aliases</span>
 				<ul>
-					{settings.search.shortcuts.map((cmd, index) => {
+					{[
+						...settings.search.shortcuts,
+						...builtInSearchShortcuts.filter(
+							(shortcut) =>
+								!settings.search.shortcuts.some(
+									(item) => item.alias === shortcut.alias
+								)
+						)
+					].map((cmd, index) => {
 						return (
 							<li key={index}>
 								<span className="text-blue">{cmd.alias} </span> {cmd.name}
