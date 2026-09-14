@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react"
 import Image from "next/image"
 import Meta from "@/components/Meta"
 import Terminal from "@/components/Terminal"
+import StatusIsland from "@/components/StatusIsland"
 import "@fontsource/fira-code/400.css"
 import "@fontsource/fira-code/600.css"
 import { useSettings } from "@/context/settings"
@@ -100,6 +101,7 @@ export default function Home() {
 			{settings && (
 				<>
 					<Meta />
+					<StatusIsland />
 					{wallpaper && (
 						<Image
 							alt=""
