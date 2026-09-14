@@ -1,9 +1,14 @@
 import { useSettings } from "@/context/settings"
-import useFetchData from "@/hooks/useFetchData"
+import { useEffect, useState } from "react"
+import { UAParser } from "ua-parser-js"
 
 const Prompt = ({ command, showSymbol = true }) => {
 	const { settings } = useSettings()
-	const [browserData] = useFetchData()
+	const [browserName, setBrowserName] = useState("unknown")
+
+	useEffect(() => {
+		setBrowserName(new UAParser().getBrowser().name?.toLowerCase() || "unknown")
+	}, [])
 	const lower_username = settings.username.toLowerCase()
 	const promptSettings = settings.prompt
 
@@ -11,7 +16,7 @@ const Prompt = ({ command, showSymbol = true }) => {
 		<span className="flex cursor-default">
 			<span className={`text-${promptSettings.userColor}`}>{lower_username}</span>
 			<span className={`text-${promptSettings.atColor}`}>@</span>
-			<span className={`text-${promptSettings.hostColor}`}>{browserData.browserLower}</span>
+			<span className={`text-${promptSettings.hostColor}`}>{browserName}</span>
 			{showSymbol && (
 				<span className={`text-${promptSettings.promptColor} ml-2`}>
 					{" "}

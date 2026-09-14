@@ -1,11 +1,13 @@
 import React, { useEffect, useState, useRef } from "react"
 import List from "@/components/List"
-import Help from "@/components/Help"
-import Config from "@/components/Config"
-import Fetch from "@/components/Fetch"
+import dynamic from "next/dynamic"
 import { useSettings } from "@/context/settings"
 import { subscribe, unsubscribe } from "@/utils/event"
 import { RunCommand } from "@/utils/command"
+
+const Help = dynamic(() => import("@/components/Help"))
+const Config = dynamic(() => import("@/components/Config"))
+const Fetch = dynamic(() => import("@/components/Fetch"))
 
 const Terminal = () => {
 	const windowRef = useRef(null)

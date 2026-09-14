@@ -4,15 +4,16 @@ import { isURL } from "@/utils/isURL"
 import { useSettings } from "@/context/settings"
 import dynamic from "next/dynamic"
 
+const CodeEditor = dynamic(() => import("@/components/Editor"), {
+	ssr: false
+})
+
 const Config = ({ commands, closeCallback }) => {
 	const [command] = useState(commands.join(" "))
 	const [consoleLog, setConsoleLog] = useState([])
 	const [isDone, setDone] = useState(false)
 	const [isEditMode, setIsEditMode] = useState(false)
 	const { settings, setSettings, resetSettings } = useSettings()
-	const CodeEditor = dynamic(() => import("@/components/Editor"), {
-		ssr: false
-	})
 
 	useEffect(() => {
 		setConsoleLog([])

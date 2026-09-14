@@ -98,6 +98,8 @@ export default function Home() {
 							${isLoaded ? "opacity-100" : "opacity-0"}`}
 							src={wallpaper}
 							fill
+							loading="eager"
+							fetchPriority="high"
 							onLoad={() => {
 								setIsLoaded(true)
 							}}

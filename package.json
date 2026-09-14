@@ -38,5 +38,8 @@
         "react-error-boundary": "^4.1.2",
         "serwist": "^9.5.0",
         "ua-parser-js": "^2.0.8"
+    },
+    "allowScripts": {
+        "sharp@0.34.5": true
     }
 }

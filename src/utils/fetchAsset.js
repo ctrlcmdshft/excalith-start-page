@@ -9,18 +9,8 @@ export async function fetchAsset(assetPath) {
 		// If it's a URL, return it directly
 		return assetPath
 	} else {
-		// If it's not a URL, make an API call to fetch the asset
-		const response = await fetch(`/api/getData?file=${assetPath}`)
-		const data = await response
-			.clone()
-			.json()
-			.catch(() => response.blob())
-		if (data.warning) {
-			console.log("File not found: " + assetPath)
-			return "" // Return an empty string
-		}
-		// Create a blob URL for the asset data
-		const url = URL.createObjectURL(data)
-		return url
+		// Let the browser load and decode the image directly, without buffering
+		// it as JSON/blob data first or retaining an unreleased object URL.
+		return `/api/getData?file=${encodeURIComponent(assetPath)}`
 	}
 }
